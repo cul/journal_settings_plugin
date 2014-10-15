@@ -19,13 +19,19 @@ function my_admin_scripts() {
     wp_enqueue_media();
     wp_enqueue_script('the-color-picker', plugins_url('custom-journal-settings/the-color-picker.js'), array( 'jquery' ));
     wp_localize_script( 'the-color-picker', 'logoSelector', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+    wp_localize_script( 'the-color-picker', 'backgroundSelector', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_enqueue_media();
 }
 
 add_action("wp_ajax_logo_save", "logo_save");
+add_action("wp_ajax_background_image_save", "background_image_save");
 
 function logo_save(){
    update_option('logo_url', $_POST['logo_url']);   
+}
+
+function background_image_save(){
+   update_option('background_image_url', $_POST['background_image_url']);   
 }
 
 function my_theme_options() {
@@ -82,6 +88,10 @@ function logo_setting() {
  
  function back_image() { 
  	echo '<input id="back_image" type="file" name="back_image" />';
+    $current_back_image = get_option('background_image_url');
+    if($current_back_image){
+        echo '<img src="'. $current_back_image .'">';
+    }
  
  }
 
