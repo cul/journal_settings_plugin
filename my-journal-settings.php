@@ -16,6 +16,16 @@ add_action( 'admin_menu', 'my_admin_menu' );
 
 function my_admin_scripts() {
     // We'll put some javascript & css here later
+    wp_enqueue_media();
+    wp_enqueue_script('the-color-picker', plugins_url('custom-journal-settings/the-color-picker.js'), array( 'jquery' ));
+    wp_localize_script( 'the-color-picker', 'logoSelector', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+    wp_enqueue_media();
+}
+
+add_action("wp_ajax_logo_save", "logo_save");
+
+function logo_save(){
+   update_option('logo_url', $_POST['logo_url']);   
 }
 
 function my_theme_options() {
@@ -57,6 +67,16 @@ function my_section_general() {
 //logo uploader
 function logo_setting() { 
  	echo '<input id="logo" type="file" name="logo" />';
+    $current_logo = get_option('logo_url');
+    if($current_logo){
+        echo '<img src="'. $current_logo .'">';
+    }
+    // $options = get_option( 'my-theme-options' );
+    // $current_logo = $options['logo'];
+    
+    // echo '<input id="logo" type="file" name="logo" />';
+   
+
  
  }
  
