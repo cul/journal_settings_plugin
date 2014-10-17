@@ -53,8 +53,9 @@ jQuery( document ).ready(function(){
         url: logoSelector.ajaxurl, // Including ajax file
         data: {"action": "logo_save", "logo_url": attachment.url }, // Sending data dname to post_word_count function.
         success: function(data){ // Show returned data using the function.
-            console.log(data);
-            console.log(attachment.url);
+            jQuery("#new_logo").remove();
+            jQuery("#logo_init").remove();
+            jQuery("#logo").after("<img id=new_logo src=" + attachment.url + ">");
         }
         });
 
@@ -100,8 +101,9 @@ jQuery( document ).ready(function(){
         url: backgroundSelector.ajaxurl, // Including ajax file
         data: {"action": "background_image_save", "background_image_url": attach.url }, // Sending data dname to post_word_count function.
         success: function(data){ // Show returned data using the function.
-            jQuery(file_frame).hide();
-            console.log(attach.url);
+            jQuery("#new_back_img").remove();
+            jQuery("#back_image_init").remove();
+            jQuery("#back_image").after("<img id=new_back_img src=" + attach.url + ">");
         }
         });
 
