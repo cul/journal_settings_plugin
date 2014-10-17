@@ -1,7 +1,7 @@
 jQuery( document ).ready(function(){
 
     "use strict";
- 
+
     //This if statement checks if the color picker widget exists within jQuery UI
 
     //If it does exist then we initialize the WordPress color picker on our text input field
@@ -21,17 +21,18 @@ jQuery( document ).ready(function(){
     }
 
     var file_frame;
- 
+    var file_frame_two;
+
   jQuery('#logo').live('click', function( event ){
- 
+
     event.preventDefault();
- 
+
     // If the media frame already exists, reopen it.
     if ( file_frame ) {
       file_frame.open();
       return;
     }
- 
+
     // Create the media frame.
     file_frame = wp.media.frames.file_frame = wp.media({
       title: jQuery( this ).data( 'uploader_title' ),
@@ -40,12 +41,12 @@ jQuery( document ).ready(function(){
       },
       multiple: false  // Set to true to allow multiple files to be selected
     });
- 
+
     // When an image is selected, run a callback.
     file_frame.on( 'select', function() {
       // We set multiple to false so only get one image from the uploader
       var attachment = file_frame.state().get('selection').first().toJSON();
- 
+
       // Do something with attachment.id and/or attachment.url here
       jQuery.ajax({
         type: 'POST',   // Adding Post method
@@ -53,12 +54,13 @@ jQuery( document ).ready(function(){
         data: {"action": "logo_save", "logo_url": attachment.url }, // Sending data dname to post_word_count function.
         success: function(data){ // Show returned data using the function.
             console.log(data);
+            console.log(attachment.url);
         }
         });
-      console.log(attachment.url);
+
 
     });
- 
+
     // Finally, open the modal
     file_frame.open();
   });
@@ -69,29 +71,29 @@ jQuery( document ).ready(function(){
   });
 
   jQuery('#back_image').live('click', function( event ){
- 
+
     event.preventDefault();
- 
+
     // If the media frame already exists, reopen it.
-    if ( file_frame ) {
-      file_frame.open();
+    if ( file_frame_two ) {
+      file_frame_two.open();
       return;
     }
- 
+
     // Create the media frame.
-    file_frame = wp.media.frames.file_frame = wp.media({
+    file_frame_two = wp.media.frames.file_frame_two = wp.media({
       title: jQuery( this ).data( 'uploader_title' ),
       button: {
         text: jQuery( this ).data( 'uploader_button_text' ),
       },
       multiple: false  // Set to true to allow multiple files to be selected
     });
- 
+
     // When an image is selected, run a callback.
-    file_frame.on( 'select', function() {
+    file_frame_two.on( 'select', function() {
       // We set multiple to false so only get one image from the uploader
-      var attach = file_frame.state().get('selection').first().toJSON();
- 
+      var attach = file_frame_two.state().get('selection').first().toJSON();
+
       // Do something with attachment.id and/or attachment.url here
       jQuery.ajax({
         type: 'POST',   // Adding Post method
@@ -99,14 +101,15 @@ jQuery( document ).ready(function(){
         data: {"action": "background_image_save", "background_image_url": attach.url }, // Sending data dname to post_word_count function.
         success: function(data){ // Show returned data using the function.
             jQuery(file_frame).hide();
+            console.log(attach.url);
         }
         });
-      console.log(attach.url);
+
 
     });
- 
+
     // Finally, open the modal
-    file_frame.open();
+    file_frame_two.open();
   });
 
   // Restore the main ID when the add media button is pressed
@@ -114,7 +117,7 @@ jQuery( document ).ready(function(){
     wp.media.model.settings.post.id = wp_media_post_id;
   });
 
-    
+
 
 });
 
