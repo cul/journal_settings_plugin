@@ -61,6 +61,10 @@ function my_admin_init() {
 	add_settings_field( 'heading_color', 'Heading Color', 'my_heading_color', 'my-theme-options', 'section_general' );
 	add_settings_field( 'text_color', 'Text Color', 'my_text_color', 'my-theme-options', 'section_general' );
 	add_settings_field( 'link_color', 'Link Color', 'my_setting_color', 'my-theme-options', 'section_general' );
+    add_settings_field( 'menu_back_color', 'Menu Background Color', 'my_menu_back_color', 'my-theme-options', 'section_general' );
+    add_settings_field( 'menu_hover_color', 'Menu Background Color (Hover)', 'menu_hover_color', 'my-theme-options', 'section_general' );
+    add_settings_field( 'menu_text_color', 'Menu Text Color', 'menu_text_color_set', 'my-theme-options', 'section_general' );
+    add_settings_field( 'menu_hover_text_color', 'Menu Text Color (Hover)', 'menu_text_hover_color', 'my-theme-options', 'section_general' );
 	
     
     register_setting( 'my-theme-options', 'my-footer-options');
@@ -131,6 +135,38 @@ function my_text_color() {
 
 }
 
+//for the menu background color
+function my_menu_back_color() {
+    $options = get_option( 'my-theme-options' );
+    $colors = ( $options['menu_back_color'] != "" ) ? sanitize_text_field( $options['menu_back_color'] ) : '#3D9B0C';
+    echo '<input id="menu_back_color" class="color" name="my-theme-options[menu_back_color]" type="text" value="' . $colors .'" />';
+
+}
+
+//for the menu text color
+function menu_text_color_set() {
+    $options = get_option( 'my-theme-options' );
+    $color = ( $options['menu_text_color'] != "" ) ? sanitize_text_field( $options['menu_text_color'] ) : '#3D9B0C';
+    echo '<input id="menu_text_color" class="color" name="my-theme-options[menu_text_color]" type="text" value="' . $color .'" />';
+
+}
+
+//for the menu background hover color
+function menu_hover_color() {
+    $options = get_option( 'my-theme-options' );
+    $color = ( $options['menu_hover_color'] != "" ) ? sanitize_text_field( $options['menu_hover_color'] ) : '#3D9B0C';
+    echo '<input id="menu_hover_color" class="color" name="my-theme-options[menu_hover_color]" type="text" value="' . $color .'" />';
+
+}
+
+//for the menu background hover color
+function menu_text_hover_color() {
+    $options = get_option( 'my-theme-options' );
+    $color = ( $options['menu_text_hover_color'] != "" ) ? sanitize_text_field( $options['menu_text_hover_color'] ) : '#3D9B0C';
+    echo '<input id="menu_text_hover_color" class="color" name="my-theme-options[menu_text_hover_color]" type="text" value="' . $color .'" />';
+
+}
+
 
 //validating uploaded images
 function validate_setting($my_theme_options) {
@@ -169,11 +205,29 @@ function my_wp_head() {
     $background_color = $options['background_color'];
     $text_color = $options['text_color'];
     $heading_color = $options['heading_color'];
-    echo "<style> a { color: $color; }
-    	   body {background-color: $background_color;
-    	   		 color: $text_color; }
-    	   h1, h2, h3, h4 { color: $heading_color; }
-    	 </style>";
+    $menu_background_color = $options['menu_back_color'];
+    $menu_text_color = $options['menu_text_color'];
+    $menu_hover_color = $options['menu_hover_color'];
+    $menu_text_hover_color = $options['menu_text_hover_color'];
+    ?>
+        <style> a { color: <?php echo $color ?>; }
+    	   body {background-color: <?php echo $background_color ?>;
+    	   		 color: <?php echo $text_color ?>; }
+    	   h1, h2, h3, h4 { color: <?php echo $heading_color ?>; }
+           div#bs-example-navbar-collapse-1.collapse.navbar-collapse{
+            background-color: <?php echo $menu_background_color ?>;
+           }
+           div#bs-example-navbar-collapse-1.collapse.navbar-collapse li:hover{
+            background-color: <?php echo $menu_hover_color ?>;
+           }
+           div#bs-example-navbar-collapse-1 a{
+            color: <?php echo $menu_text_color ?>;
+           }
+           div#bs-example-navbar-collapse-1 a:hover{
+            color: <?php echo $menu_text_hover_color ?>;
+           }
+    	 </style>;
+    <?php
 
 }
 
