@@ -56,6 +56,7 @@ jQuery( document ).ready(function(){
             jQuery("#new_logo").remove();
             jQuery("#logo_init").remove();
             jQuery("#logo").after("<img id=new_logo src=" + attachment.url + ">");
+            jQuery(".media-modal-close").click();
         }
         });
 
@@ -104,6 +105,7 @@ jQuery( document ).ready(function(){
             jQuery("#new_back_img").remove();
             jQuery("#back_image_init").remove();
             jQuery("#back_image").after("<img id=new_back_img src=" + attach.url + ">");
+            jQuery(".media-modal-close").click();
         }
         });
 
