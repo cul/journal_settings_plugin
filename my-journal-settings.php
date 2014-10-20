@@ -61,8 +61,17 @@ function my_admin_init() {
 	add_settings_field( 'heading_color', 'Heading Color', 'my_heading_color', 'my-theme-options', 'section_general' );
 	add_settings_field( 'text_color', 'Text Color', 'my_text_color', 'my-theme-options', 'section_general' );
 	add_settings_field( 'link_color', 'Link Color', 'my_setting_color', 'my-theme-options', 'section_general' );
-	add_settings_field( 'issn_print', 'ISSN(print)', 'my_print_issn', 'my-theme-options', 'section_general' );
-	add_settings_field( 'issn_online', 'ISSN(online)', 'my_online_issn', 'my-theme-options', 'section_general' );
+	
+    
+    register_setting( 'my-theme-options', 'my-footer-options');
+    add_settings_section( 'footer_general', 'Footer Settings', 'my_footer_general', 'my-theme-options' );
+    add_settings_field('copyright', 'Copyright License:', 'copyright_settings', 'my-theme-options', 'footer_general'); 
+    add_settings_field('copyright_url', '', 'copyright_setting_url', 'my-theme-options', 'footer_general'); 
+    add_settings_field('manual_copyright', 'Custom Copyright Statement:', 'custom_copyright', 'my-theme-options', 'footer_general'); 
+    add_settings_field( 'issn_print', 'ISSN(print)', 'my_print_issn', 'my-theme-options', 'footer_general' );
+    add_settings_field( 'issn_online', 'ISSN(online)', 'my_online_issn', 'my-theme-options', 'footer_general' );
+    add_settings_field('ac_partner', 'Academic Commons Partner?', 'ac_partner_setting', 'my-theme-options', 'footer_general');
+    add_settings_field('full_text_setting', 'This site displays: ', 'full_text_setting', 'my-theme-options', 'footer_general');
 }
 add_action( 'admin_init', 'my_admin_init' );
 
@@ -122,20 +131,6 @@ function my_text_color() {
 
 }
 
-//textbox for print issn
-function my_print_issn() {
-    $options = get_option( 'my-theme-options' );
-    $print = ( $options['print_issn'] != "" ) ? sanitize_text_field( $options['print_issn'] ) : '';
-    echo '<input id="issn_print" name="my-theme-options[print_issn]" type="text" value="' . $print .'" />';
-
-}
-
-//textbox for online issn
-function my_online_issn() {
-    $options = get_option( 'my-theme-options' );
-    $print = ( $options['online_issn'] != "" ) ? sanitize_text_field( $options['online_issn'] ) : '';
-    echo '<input id="issn_online" name="my-theme-options[online_issn]" type="text" value="' . $print .'" />';
-}
 
 //validating uploaded images
 function validate_setting($my_theme_options) {
@@ -183,3 +178,74 @@ function my_wp_head() {
 }
 
 add_action( 'wp_head', 'my_wp_head' );
+
+
+//ADDING FOOTER ACTION TO THE PLUGIN
+function my_footer_general() {
+    _e( 'Edit your settings' );
+}
+
+function copyright_settings() {
+    $options = get_option( 'my-footer-options' );
+    $copyright = ( $options['copyright'] != "" ) ? sanitize_text_field( $options['copyright'] ) : '';
+    echo '<input id="copyright"  placeholder="name" name="my-footer-options[copyright]" type="text" value="' . $copyright .'" />';
+
+}
+
+function copyright_setting_url() {
+    $options = get_option( 'my-footer-options' );
+    $copyright_url = ( $options['copyright_url'] != "" ) ? sanitize_text_field( $options['copyright_url'] ) : '';
+    echo '<input id="copyright_url"  placeholder="url" name="my-footer-options[copyright_url]" type="text" value="' . $copyright_url .'" />';
+
+}
+
+//textbox for print issn
+function my_print_issn() {
+    $options = get_option( 'my-footer-options' );
+    $print = ( $options['print_issn'] != "" ) ? sanitize_text_field( $options['print_issn'] ) : '';
+    echo '<input id="issn_print" name="my-theme-options[print_issn]" type="text" value="' . $print .'" />';
+
+}
+
+//textbox for online issn
+function my_online_issn() {
+    $options = get_option( 'my-footer-options' );
+    $print = ( $options['online_issn'] != "" ) ? sanitize_text_field( $options['online_issn'] ) : '';
+    echo '<input id="issn_online" name="my-theme-options[online_issn]" type="text" value="' . $print .'" />';
+}
+
+function ac_partner_setting() {
+    $options = get_option( 'my-footer-options' );
+
+    // Get the value of this option.
+    $checked = $options['ac_partner'];
+
+    // The value to compare with (the value of the checkbox below).
+    $current = 1;
+
+    // True by default, just here to make things clear.
+    $echo = true;
+
+    ?>
+    <input id="ac_partner"  type="checkbox" name="my-footer-options[ac_partner]" type="text" value="1" <?php if ( 1 == $options['ac_partner'] ) echo 'checked="checked"'; ?> />
+
+    <?php
+}
+
+function custom_copyright(){
+    $options = get_option( 'my-footer-options' );
+    $custom_copyright = ( $options['custom_copyright'] != "" ) ? sanitize_text_field( $options['custom_copyright'] ) : '';
+    echo 'OR</br>';
+    echo '<input id="custom_copyright" name="my-footer-options[custom_copyright]" type="text" value="' . $custom_copyright .'" />';
+}
+
+
+function full_text_setting(){
+    $options = get_option( 'my-footer-options' );
+    ?>
+    Abstract
+    <input type="radio" name="my-footer-options[full_text_setting]" value="abstract"<?php checked( 'abstract' == $options['full_text_setting'] ); ?> />
+    Full Text
+    <input type="radio" name="my-footer-options[full_text_setting]" value="full_text"<?php checked( 'full_text' == $options['full_text_setting'] ); ?> />
+    <?php
+}
