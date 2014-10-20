@@ -54,7 +54,7 @@ function my_theme_options() {
 
 function my_admin_init() {
     register_setting( 'my-theme-options', 'my-theme-options', 'validate_setting' );
-    add_settings_section( 'section_general', 'General Settings', 'my_section_general', 'my-theme-options' );
+    add_settings_section( 'section_general', 'Style & Color Settings', 'my_section_general', 'my-theme-options' );
     add_settings_field('logo', 'Logo:', 'logo_setting', 'my-theme-options', 'section_general');
     add_settings_field('back_image', 'Background Image:', 'back_image', 'my-theme-options', 'section_general');
     add_settings_field( 'back_color', 'Background Color', 'my_background_color', 'my-theme-options', 'section_general' );
@@ -76,7 +76,7 @@ function my_admin_init() {
 add_action( 'admin_init', 'my_admin_init' );
 
 function my_section_general() {
-    _e( 'Edit your settings' );
+    _e( 'Edit your journal\'s settings' );
 }
 
 //logo uploader
@@ -182,7 +182,7 @@ add_action( 'wp_head', 'my_wp_head' );
 
 //ADDING FOOTER ACTION TO THE PLUGIN
 function my_footer_general() {
-    _e( 'Edit your settings' );
+    _e( 'Edit your journal\'s footer settings' );
 }
 
 function copyright_settings() {
