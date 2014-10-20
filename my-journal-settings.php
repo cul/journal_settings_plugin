@@ -17,7 +17,7 @@ add_action( 'admin_menu', 'my_admin_menu' );
 function my_admin_scripts() {
     // We'll put some javascript & css here later
     wp_enqueue_media();
-    wp_enqueue_script('the-color-picker', plugins_url('journal_settings_plugin/the-color-picker.js'), array( 'jquery' ));
+    wp_enqueue_script('the-color-picker', plugins_url('custom-journal-settings/the-color-picker.js'), array( 'jquery' ));
     wp_localize_script( 'the-color-picker', 'logoSelector', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_localize_script( 'the-color-picker', 'backgroundSelector', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_enqueue_media();
@@ -214,19 +214,21 @@ function my_wp_head() {
     	   body {background-color: <?php echo $background_color ?>;
     	   		 color: <?php echo $text_color ?>; }
     	   h1, h2, h3, h4 { color: <?php echo $heading_color ?>; }
-           div#bs-example-navbar-collapse-1.collapse.navbar-collapse{
-            background-color: <?php echo $menu_background_color ?>;
-           }
            div#bs-example-navbar-collapse-1.collapse.navbar-collapse li:hover{
             background-color: <?php echo $menu_hover_color ?>;
            }
            div#bs-example-navbar-collapse-1 a{
             color: <?php echo $menu_text_color ?>;
            }
+           div.navbar-header a.navbar-brand{ color: <?php echo $menu_text_color ?>; }
+           div.navbar-header a.navbar-brand:hover{ background-color: <?php echo $menu_hover_color ?>;
+                color: <?php echo $menu_text_hover_color ?>;}
            div#bs-example-navbar-collapse-1 a:hover{
             color: <?php echo $menu_text_hover_color ?>;
            }
-    	 </style>;
+           div.container-fluid{ background-color: <?php echo $menu_background_color ?>;}
+
+    	 </style>
     <?php
 
 }
