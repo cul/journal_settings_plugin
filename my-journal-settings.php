@@ -72,6 +72,8 @@ function my_admin_init() {
     add_settings_field('copyright', 'Copyright License:', 'copyright_settings', 'my-theme-options', 'footer_general'); 
     add_settings_field('copyright_url', '', 'copyright_setting_url', 'my-theme-options', 'footer_general'); 
     add_settings_field('manual_copyright', 'Custom Copyright Statement:', 'custom_copyright', 'my-theme-options', 'footer_general'); 
+    add_settings_field('school_affiliation', 'School Affiliation:', 'school_affiliation', 'my-theme-options', 'footer_general'); 
+    add_settings_field('school_affiliation_url', '', 'school_affiliation_url', 'my-theme-options', 'footer_general'); 
     add_settings_field( 'issn_print', 'ISSN(print)', 'my_print_issn', 'my-theme-options', 'footer_general' );
     add_settings_field( 'issn_online', 'ISSN(online)', 'my_online_issn', 'my-theme-options', 'footer_general' );
     add_settings_field('ac_partner', 'Academic Commons Partner?', 'ac_partner_setting', 'my-theme-options', 'footer_general');
@@ -304,4 +306,18 @@ function full_text_setting(){
     Full Text
     <input type="radio" name="my-footer-options[full_text_setting]" value="full_text"<?php checked( 'full_text' == $options['full_text_setting'] ); ?> />
     <?php
+}
+
+function school_affiliation() {
+    $options = get_option( 'my-footer-options' );
+    $school = ( $options['school_affiliation'] != "" ) ? sanitize_text_field( $options['school_affiliation'] ) : '';
+    echo '<input id="school_affiliation"  placeholder="name" name="my-footer-options[school_affiliation]" type="text" value="' . $school .'" />';
+
+}
+
+function school_affiliation_url() {
+    $options = get_option( 'my-footer-options' );
+    $school_url = ( $options['school_affiliation_url'] != "" ) ? sanitize_text_field( $options['school_affiliation_url'] ) : '';
+    echo '<input id="school_affiliation_url"  placeholder="url" name="my-footer-options[school_affiliation_url]" type="text" value="' . $school_url .'" />';
+
 }
