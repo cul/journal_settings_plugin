@@ -203,7 +203,7 @@ function copyright_setting_url() {
 function my_print_issn() {
     $options = get_option( 'my-footer-options' );
     $print = ( $options['print_issn'] != "" ) ? sanitize_text_field( $options['print_issn'] ) : '';
-    echo '<input id="issn_print" name="my-theme-options[print_issn]" type="text" value="' . $print .'" />';
+    echo '<input id="issn_print" name="my-footer-options[print_issn]" type="text" value="' . $print .'" />';
 
 }
 
@@ -211,7 +211,7 @@ function my_print_issn() {
 function my_online_issn() {
     $options = get_option( 'my-footer-options' );
     $print = ( $options['online_issn'] != "" ) ? sanitize_text_field( $options['online_issn'] ) : '';
-    echo '<input id="issn_online" name="my-theme-options[online_issn]" type="text" value="' . $print .'" />';
+    echo '<input id="issn_online" name="my-footer-options[online_issn]" type="text" value="' . $print .'" />';
 }
 
 function ac_partner_setting() {
