@@ -223,10 +223,12 @@ function my_wp_head() {
     $menu_text_color = $options['menu_text_color'];
     $menu_hover_color = $options['menu_hover_color'];
     $menu_text_hover_color = $options['menu_text_hover_color'];
+    $back_image = get_option('background_image_url');
     ?>
         <style> a { color: <?php echo $color ?>; }
     	   body {background-color: <?php echo $background_color ?>;
-    	   		 color: <?php echo $text_color ?>; }
+    	   		 color: <?php echo $text_color ?>;
+                 background-image: url("<?php echo $back_image ?>"); }
     	   h1, h2, h3, h4 { color: <?php echo $heading_color ?>; }
            div#bs-example-navbar-collapse-1.collapse.navbar-collapse li:hover{
             background-color: <?php echo $menu_hover_color ?>;

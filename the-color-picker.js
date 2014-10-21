@@ -152,7 +152,36 @@ jQuery( document ).ready(function(){
 
   
 
-
-
 });
+
+  jQuery("#logo_init").after("<button class=logo_removal>Remove Image</button>");
+  jQuery(".logo_removal").on("click", function(){
+                          event.preventDefault();
+                          jQuery.ajax({
+                            type: 'POST',
+                            url: logoRemove.ajaxurl,
+                            data: {"action": "logo_remove"},
+                            success: function(data){
+                              jQuery("img#new_logo").remove();
+                              jQuery("img#logo_init").remove();
+                              jQuery("button.logo_removal").remove();
+                            }
+                          });
+                        });
+
+  jQuery("#back_image_init").after("<button class=background_removal>Remove Image</button>");
+  jQuery("button.background_removal").on("click", function(){
+            event.preventDefault();
+            jQuery.ajax({
+              type: 'POST',
+              url: backgroundRemove.ajaxurl,
+              data: {"action": "background_image_remove"},
+              success: function(data){
+                jQuery("img#new_back_img").remove();
+                jQuery("img#back_image_init").remove();
+                jQuery("button.background_removal").remove();
+              }
+            });
+          });
+
 
