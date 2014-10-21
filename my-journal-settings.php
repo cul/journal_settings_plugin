@@ -229,6 +229,11 @@ function my_wp_head() {
             color: <?php echo $menu_text_hover_color ?>;
            }
            div.container-fluid{ background-color: <?php echo $menu_background_color ?>;}
+           nav.navbar.navbar-default.navbar-fixed-top div.container-fluid{ background-color: <?php echo $menu_background_color ?>;
+            color: <?php echo $menu_text_color ?>;}
+           #cujo-navbar a {color: <?php echo $menu_text_color ?>;}
+           #cujo-navbar a:hover { background-color: <?php echo $menu_hover_color ?>;
+                color: <?php echo $menu_text_hover_color ?>;}
 
     	 </style>
     <?php
