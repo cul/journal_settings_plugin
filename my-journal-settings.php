@@ -20,11 +20,15 @@ function my_admin_scripts() {
     wp_enqueue_script('the-color-picker', plugins_url('custom-journal-settings/the-color-picker.js'), array( 'jquery' ));
     wp_localize_script( 'the-color-picker', 'logoSelector', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_localize_script( 'the-color-picker', 'backgroundSelector', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+    wp_localize_script( 'the-color-picker', 'backgroundRemove', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+    wp_localize_script( 'the-color-picker', 'logoRemove', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_enqueue_media();
 }
 
 add_action("wp_ajax_logo_save", "logo_save");
 add_action("wp_ajax_background_image_save", "background_image_save");
+add_action("wp_ajax_background_image_remove", "background_image_remove");
+add_action("wp_ajax_logo_remove", "logo_remove");
 
 function logo_save(){
    update_option('logo_url', $_POST['logo_url']);
@@ -32,6 +36,14 @@ function logo_save(){
 
 function background_image_save(){
    update_option('background_image_url', $_POST['background_image_url']);
+}
+
+function background_image_remove(){
+    delete_option('background_image_url');
+}
+
+function logo_remove(){
+    delete_option('logo_url');
 }
 
 function my_theme_options() {

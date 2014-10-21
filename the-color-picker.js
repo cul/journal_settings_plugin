@@ -56,8 +56,22 @@ jQuery( document ).ready(function(){
             jQuery("#new_logo").remove();
             jQuery("#logo_init").remove();
             jQuery("#logo").after("<img id=new_logo src=" + attachment.url + ">");
+            jQuery("#new_logo").after("<button id=logo_remove>Remove Image</button>");
             jQuery(".media-modal-close").click();
         }
+        }).done(function(){
+          jQuery("button#logo_remove").on("click", function(){
+            event.preventDefault();
+            jQuery.ajax({
+              type: 'POST',
+              url: logoRemove.ajaxurl,
+              data: {"action": "logo_remove"},
+              success: function(data){
+                jQuery("img#new_logo").remove();
+                jQuery("img#logo_init").remove();
+              }
+            });
+          });
         });
 
 
@@ -105,8 +119,23 @@ jQuery( document ).ready(function(){
             jQuery("#new_back_img").remove();
             jQuery("#back_image_init").remove();
             jQuery("#back_image").after("<img id=new_back_img src=" + attach.url + ">");
+            jQuery("#back_image").after("<button id=back_remove>Remove Image</button>");
             jQuery(".media-modal-close").click();
         }
+        }).done(function(){
+          jQuery("button#back_remove").on("click", function(){
+            event.preventDefault();
+            jQuery.ajax({
+              type: 'POST',
+              url: backgroundRemove.ajaxurl,
+              data: {"action": "background_image_remove"},
+              success: function(data){
+                jQuery("img#new_back_img").remove();
+                jQuery("img#back_image_init").remove();
+              }
+            });
+          });
+
         });
 
 
@@ -120,6 +149,8 @@ jQuery( document ).ready(function(){
   jQuery('a.add_media').on('click', function() {
     wp.media.model.settings.post.id = wp_media_post_id;
   });
+
+  
 
 
 
