@@ -16,8 +16,8 @@ add_action( 'admin_menu', 'my_admin_menu' );
 
 function my_admin_scripts() {
     // We'll put some javascript & css here later
-    wp_enqueue_media();
     wp_enqueue_script('the-color-picker', plugins_url('custom-journal-settings/the-color-picker.js'), array( 'jquery' ));
+    wp_enqueue_style('journal_settings', plugins_url('custom-journal-settings/journal_settings.css'));
     wp_localize_script( 'the-color-picker', 'logoSelector', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_localize_script( 'the-color-picker', 'backgroundSelector', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_localize_script( 'the-color-picker', 'backgroundRemove', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
@@ -107,7 +107,7 @@ function logo_setting() {
  	echo '<input id="logo" type="file" name="logo" />';
     $current_logo = get_option('logo_url');
     if($current_logo){
-        echo '<img id="logo_init" src="'. $current_logo .'">';
+        echo '<img id="logo_init" src="'. $current_logo .'"></br>';
     }
 
 
@@ -118,7 +118,7 @@ function logo_setting() {
  	echo '<input id="back_image" type="file" name="back_image" />';
     $current_back_image = get_option('background_image_url');
     if($current_back_image){
-        echo '<img id="back_image_init" src="'. $current_back_image .'">';
+        echo '<img id="back_image_init" src="'. $current_back_image .'"></br>';
     }
 
  }
@@ -233,7 +233,8 @@ function my_wp_head() {
         <style> a { color: <?php echo $color ?>; }
     	   body {background-color: <?php echo $background_color ?>;
     	   		 color: <?php echo $text_color ?>;
-                 background-image: url("<?php echo $back_image ?>"); }
+                 background-image: url("<?php echo $back_image ?>");
+                  }
     	   h1, h2, h3, h4 { color: <?php echo $heading_color ?>; }
            div#bs-example-navbar-collapse-1.collapse.navbar-collapse li:hover{
             background-color: <?php echo $menu_hover_color ?>;
