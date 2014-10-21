@@ -58,6 +58,7 @@ jQuery( document ).ready(function(){
             jQuery("#logo").after("<img id=new_logo src=" + attachment.url + ">");
             jQuery("#new_logo").after("<button id=logo_remove>Remove Image</button>");
             jQuery(".media-modal-close").click();
+            jQuery("button.logo_removal").remove();
         }
         }).done(function(){
           jQuery("button#logo_remove").on("click", function(){
@@ -69,6 +70,7 @@ jQuery( document ).ready(function(){
               success: function(data){
                 jQuery("img#new_logo").remove();
                 jQuery("img#logo_init").remove();
+                jQuery("button#logo_remove").remove();
               }
             });
           });
@@ -121,6 +123,7 @@ jQuery( document ).ready(function(){
             jQuery("#back_image").after("<img id=new_back_img src=" + attach.url + ">");
             jQuery("#back_image").after("<button id=back_remove>Remove Image</button>");
             jQuery(".media-modal-close").click();
+            jQuery("button.background_removal").remove();
         }
         }).done(function(){
           jQuery("button#back_remove").on("click", function(){
@@ -132,6 +135,7 @@ jQuery( document ).ready(function(){
               success: function(data){
                 jQuery("img#new_back_img").remove();
                 jQuery("img#back_image_init").remove();
+                jQuery("button#back_remove").remove();
               }
             });
           });
