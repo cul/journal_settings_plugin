@@ -90,6 +90,11 @@ function my_admin_init() {
     add_settings_field( 'issn_online', 'ISSN(online)', 'my_online_issn', 'my-theme-options', 'footer_general' );
     add_settings_field('ac_partner', 'Academic Commons Partner?', 'ac_partner_setting', 'my-theme-options', 'footer_general');
     add_settings_field('full_text_setting', 'This site displays: ', 'full_text_setting', 'my-theme-options', 'footer_general');
+
+    register_setting( 'my-theme-options', 'social-media-options');
+    add_settings_section( 'social_general', 'Social Media Settings', 'my_social_general', 'my-theme-options' );
+    add_settings_field('twitter_name', 'Twitter Name', 'twitter_name', 'my-theme-options', 'social_general'); 
+
 }
 add_action( 'admin_init', 'my_admin_init' );
 
@@ -338,5 +343,16 @@ function school_affiliation_url() {
     $options = get_option( 'my-footer-options' );
     $school_url = ( $options['school_affiliation_url'] != "" ) ? sanitize_text_field( $options['school_affiliation_url'] ) : '';
     echo '<input id="school_affiliation_url"  placeholder="url" name="my-footer-options[school_affiliation_url]" type="text" value="' . $school_url .'" />';
+
+}
+
+function my_social_general() {
+    _e( 'Edit your social media information' );
+}
+
+function twitter_name() {
+    $options = get_option( 'social-media-options' );
+    $twitter_name = ( $options['twitter_name'] != "" ) ? sanitize_text_field( $options['twitter_name'] ) : '';
+    echo '<input id="twitter_name"  placeholder="name" name="social-media-options[twitter_name]" type="text" value="' . $twitter_name .'" />';
 
 }
