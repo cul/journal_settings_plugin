@@ -117,7 +117,8 @@ function my_section_general() {
 }
 
 function favicon_load() {
-    echo '<input id="favicon_load" type="file" name="favicon" />';
+    echo '<input id="favicon_load" type="file" name="favicon" /></br>';
+    echo '<span class="small">*Please upload a 16x16 image</span>';
     $current_favicon = get_option('favicon_url');
     if($current_favicon){
         echo '<img id="favicon_init" src="'. $current_favicon .'"></br>';
