@@ -220,6 +220,7 @@ jQuery( document ).ready(function(){
     wp.media.model.settings.post.id = wp_media_post_id;
   });
 
+
 });
 
   jQuery("#logo_init").after("<button class=logo_removal>Remove Image</button>");

@@ -25,6 +25,7 @@ function my_admin_scripts() {
     wp_localize_script( 'the-color-picker', 'logoRemove', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_localize_script( 'the-color-picker', 'faviconRemove', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_localize_script( 'the-color-picker', 'faviconSelector', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+    wp_localize_script( 'the-color-picker', 'socialAdd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_enqueue_media();
 }
 
@@ -34,6 +35,7 @@ add_action("wp_ajax_background_image_remove", "background_image_remove");
 add_action("wp_ajax_logo_remove", "logo_remove");
 add_action("wp_ajax_favicon_save", "favicon_save");
 add_action("wp_ajax_favicon_remove", "favicon_remove");
+add_action("wp_ajax_social_add", "social_add");
 
 
 function logo_save(){
@@ -58,6 +60,10 @@ function favicon_save(){
 
 function favicon_remove(){
     delete_option('favicon_url');
+}
+
+function social_add(){
+    update_option('social_option', true);
 }
 
 function my_theme_options() {
@@ -109,7 +115,8 @@ function my_admin_init() {
     register_setting( 'my-theme-options', 'social-media-options');
     add_settings_section( 'social_general', 'Social Media Settings', 'my_social_general', 'my-theme-options' );
     add_settings_field('twitter_name', 'Twitter Name', 'twitter_name', 'my-theme-options', 'social_general'); 
-
+    add_settings_field('fb_name', 'Facebook Name', 'fb_name', 'my-theme-options', 'social_general');
+    add_settings_field('email_address', 'Email Address', 'email_address', 'my-theme-options', 'social_general');
 }
 add_action( 'admin_init', 'my_admin_init' );
 
@@ -378,5 +385,19 @@ function twitter_name() {
     $options = get_option( 'social-media-options' );
     $twitter_name = ( $options['twitter_name'] != "" ) ? sanitize_text_field( $options['twitter_name'] ) : '';
     echo '<input id="twitter_name"  placeholder="name" name="social-media-options[twitter_name]" type="text" value="' . $twitter_name .'" />';
+
+}
+
+function fb_name(){
+    $options = get_option( 'social-media-options' );
+    $fb_name = ( $options['fb_name'] != "" ) ? sanitize_text_field( $options['fb_name'] ) : '';
+    echo '<input id="fb_name"  placeholder="name" name="social-media-options[fb_name]" type="text" value="' . $fb_name .'" />';
+
+}
+
+function email_address(){
+    $options = get_option( 'social-media-options' );
+    $email_address = ( $options['email_address'] != "" ) ? sanitize_text_field( $options['email_address'] ) : '';
+    echo '<input id="email_address"  name="social-media-options[email_address]" type="text" value="' . $email_address .'" />';
 
 }
