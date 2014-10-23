@@ -16,6 +16,7 @@ add_action( 'admin_menu', 'my_admin_menu' );
 
 function my_admin_scripts() {
     // We'll put some javascript & css here later
+    wp_enqueue_media();
     wp_enqueue_script('the-color-picker', plugins_url('custom-journal-settings/the-color-picker.js'), array( 'jquery' ));
     wp_enqueue_style('journal_settings', plugins_url('custom-journal-settings/journal_settings.css'));
     wp_localize_script( 'the-color-picker', 'logoSelector', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
@@ -117,7 +118,7 @@ function my_section_general() {
 }
 
 function favicon_load() {
-    echo '<input id="favicon_load" type="file" name="favicon" /></br>';
+    echo '<input id="favicon" type="file" name="favicon" /></br>';
     echo '<span class="small">*Please upload a 16x16 image</span>';
     $current_favicon = get_option('favicon_url');
     if($current_favicon){
