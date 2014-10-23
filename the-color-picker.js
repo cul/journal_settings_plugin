@@ -226,9 +226,15 @@ jQuery( document ).ready(function(){
   //hides everything
   jQuery("#twitter_name").parent().parent().parent().parent().parent().contents().hide();
 
-  var social_media = jQuery("#twitter_name").parent().parent().parent();
-  var social_media_header = jQuery("#twitter_name").parent().parent().parent().parent().prev();
-
+  //showing style tab by default
+    jQuery("#logo").parent().parent().parent().css( "display", "block");
+    jQuery("#logo").parent().parent().parent().show();
+    jQuery("#logo").parent().parent().parent().parent().prev().css("display", "block");
+    jQuery("#logo").parent().parent().parent().parent().prev().next().css("display", "block");
+    jQuery("#logo").parent().parent().parent().parent().prev().show();
+    jQuery("#journal_settings_submit").parent().css("display", "block").show();
+  
+  //social media tab on click
   jQuery("#social_media.nav-tab").on("click", function(){
     event.preventDefault();
     jQuery("#ac_partner").parent().parent().parent().hide();
@@ -236,6 +242,10 @@ jQuery( document ).ready(function(){
 
     jQuery("#logo").parent().parent().parent().hide();
     jQuery("#logo").parent().parent().parent().parent().prev().hide();
+
+    jQuery("#social_media.nav-tab").addClass("active");
+    jQuery("#style.nav-tab").removeClass("active");
+    jQuery("#footer.nav-tab").removeClass("active");
 
     jQuery("#twitter_name").parent().parent().parent().css( "display", "block");
     jQuery("#twitter_name").parent().parent().parent().show();
@@ -245,6 +255,7 @@ jQuery( document ).ready(function(){
     jQuery("#journal_settings_submit").parent().css("display", "block").show();
   });
 
+  //footer tab on click
   jQuery("#footer.nav-tab").on("click", function(){
     event.preventDefault();
     jQuery("#twitter_name").parent().parent().parent().hide();
@@ -252,6 +263,10 @@ jQuery( document ).ready(function(){
 
     jQuery("#logo").parent().parent().parent().hide();
     jQuery("#logo").parent().parent().parent().parent().prev().hide();
+
+    jQuery("#footer.nav-tab").addClass("active");
+    jQuery("#style.nav-tab").removeClass("active");
+    jQuery("#social_media.nav-tab").removeClass("active");
 
     jQuery("#ac_partner").parent().parent().parent().css( "display", "block");
     jQuery("#ac_partner").parent().parent().parent().show();
@@ -261,6 +276,7 @@ jQuery( document ).ready(function(){
     jQuery("#journal_settings_submit").parent().css("display", "block").show();
   });
 
+  //style tab on click
   jQuery("#style.nav-tab").on("click", function(){
     event.preventDefault();
     jQuery("#ac_partner").parent().parent().parent().hide();
@@ -268,6 +284,10 @@ jQuery( document ).ready(function(){
 
     jQuery("#twitter_name").parent().parent().parent().hide();
     jQuery("#twitter_name").parent().parent().parent().parent().prev().hide();
+
+    jQuery("#style.nav-tab").addClass("active");
+    jQuery("#footer.nav-tab").removeClass("active");
+    jQuery("#social_media.nav-tab").removeClass("active");
 
     jQuery("#logo").parent().parent().parent().css( "display", "block");
     jQuery("#logo").parent().parent().parent().show();

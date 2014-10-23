@@ -3,3 +3,7 @@ img {
 	max-height: 500px;
 	float: left;
 }
+
+.nav-tab.active{
+	background-color: white;
+}
