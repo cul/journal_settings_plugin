@@ -72,12 +72,24 @@ function my_theme_options() {
         <div id="icon-themes" class="icon32" ><br></div>
         <h2>Journal Settings</h2>
 
+        <h3 class="nav-tab-wrapper">
+            <p  class="nav-tab active" id="style">
+                Style & Color
+
+            </p><p class="nav-tab" id="footer" >
+                Footer
+
+            </p><p  class="nav-tab" id="social_media">
+                Social Media
+            </p>
+        </h3>
+
         <form method="post" action="options.php" enctype="multipart/form-data">
             <?php wp_nonce_field( 'update-options' ); ?>
             <?php settings_fields( 'my-theme-options' ); ?>
             <?php do_settings_sections( 'my-theme-options' ); ?>
             <p class="submit">
-                <input name="Submit" type="submit" class="button-primary" value="Save Changes" />
+                <input id="journal_settings_submit" name="Submit" type="submit" class="button-primary" value="Save Changes" />
             </p >
         </form>
     </div>
@@ -114,7 +126,6 @@ function my_admin_init() {
 
     register_setting( 'my-theme-options', 'social-media-options');
     add_settings_section( 'social_general', 'Social Media Settings', 'my_social_general', 'my-theme-options' );
-    add_settings_field('social_option', 'Display Social Media? ', 'social_option', 'my-theme-options', 'social_general'); 
     add_settings_field('twitter_name', 'Twitter Name', 'twitter_name', 'my-theme-options', 'social_general'); 
     add_settings_field('fb_name', 'Facebook Name', 'fb_name', 'my-theme-options', 'social_general');
     add_settings_field('email_address', 'Email Address', 'email_address', 'my-theme-options', 'social_general');
@@ -122,7 +133,7 @@ function my_admin_init() {
 add_action( 'admin_init', 'my_admin_init' );
 
 function my_section_general() {
-    _e( 'Edit your journal\'s settings' );
+    
 }
 
 function favicon_load() {
@@ -296,7 +307,7 @@ add_action( 'wp_head', 'my_wp_head' );
 
 //ADDING FOOTER ACTION TO THE PLUGIN
 function my_footer_general() {
-    _e( 'Edit your journal\'s footer settings' );
+    
 }
 
 function copyright_settings() {
@@ -379,7 +390,7 @@ function school_affiliation_url() {
 }
 
 function my_social_general() {
-    _e( 'Edit your social media information' );
+    
 }
 
 function twitter_name() {

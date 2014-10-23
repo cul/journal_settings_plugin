@@ -220,22 +220,63 @@ jQuery( document ).ready(function(){
     wp.media.model.settings.post.id = wp_media_post_id;
   });
 
-  jQuery("#email_address").parent().parent().hide();
-  jQuery("#fb_name").parent().parent().hide();
-  jQuery("#twitter_name").parent().parent().hide();
+  
+  //trying out the tabs
 
+  //hides everything
+  jQuery("#twitter_name").parent().parent().parent().parent().parent().contents().hide();
 
-  jQuery("#social_yes").on("click", function(){
-    jQuery("#email_address").parent().parent().show();
-    jQuery("#fb_name").parent().parent().show();
-    jQuery("#twitter_name").parent().parent().show();
+  var social_media = jQuery("#twitter_name").parent().parent().parent();
+  var social_media_header = jQuery("#twitter_name").parent().parent().parent().parent().prev();
+
+  jQuery("#social_media.nav-tab").on("click", function(){
+    event.preventDefault();
+    jQuery("#ac_partner").parent().parent().parent().hide();
+    jQuery("#ac_partner").parent().parent().parent().parent().prev().hide();
+
+    jQuery("#logo").parent().parent().parent().hide();
+    jQuery("#logo").parent().parent().parent().parent().prev().hide();
+
+    jQuery("#twitter_name").parent().parent().parent().css( "display", "block");
+    jQuery("#twitter_name").parent().parent().parent().show();
+    jQuery("#twitter_name").parent().parent().parent().parent().prev().css("display", "block");
+    jQuery("#twitter_name").parent().parent().parent().parent().prev().next().css("display", "block");
+    jQuery("#twitter_name").parent().parent().parent().parent().prev().show();
+    jQuery("#journal_settings_submit").parent().css("display", "block").show();
   });
 
-  jQuery("#social_no").on("click", function(){
-    jQuery("#email_address").parent().parent().hide();
-    jQuery("#fb_name").parent().parent().hide();
-    jQuery("#twitter_name").parent().parent().hide();
+  jQuery("#footer.nav-tab").on("click", function(){
+    event.preventDefault();
+    jQuery("#twitter_name").parent().parent().parent().hide();
+    jQuery("#twitter_name").parent().parent().parent().parent().prev().hide();
+
+    jQuery("#logo").parent().parent().parent().hide();
+    jQuery("#logo").parent().parent().parent().parent().prev().hide();
+
+    jQuery("#ac_partner").parent().parent().parent().css( "display", "block");
+    jQuery("#ac_partner").parent().parent().parent().show();
+    jQuery("#ac_partner").parent().parent().parent().parent().prev().css("display", "block");
+    jQuery("#ac_partner").parent().parent().parent().parent().prev().next().css("display", "block");
+    jQuery("#ac_partner").parent().parent().parent().parent().prev().show();
+    jQuery("#journal_settings_submit").parent().css("display", "block").show();
   });
+
+  jQuery("#style.nav-tab").on("click", function(){
+    event.preventDefault();
+    jQuery("#ac_partner").parent().parent().parent().hide();
+    jQuery("#ac_partner").parent().parent().parent().parent().prev().hide();
+
+    jQuery("#twitter_name").parent().parent().parent().hide();
+    jQuery("#twitter_name").parent().parent().parent().parent().prev().hide();
+
+    jQuery("#logo").parent().parent().parent().css( "display", "block");
+    jQuery("#logo").parent().parent().parent().show();
+    jQuery("#logo").parent().parent().parent().parent().prev().css("display", "block");
+    jQuery("#logo").parent().parent().parent().parent().prev().next().css("display", "block");
+    jQuery("#logo").parent().parent().parent().parent().prev().show();
+    jQuery("#journal_settings_submit").parent().css("display", "block").show();
+  });
+
 
 });
 
