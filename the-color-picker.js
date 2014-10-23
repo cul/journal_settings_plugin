@@ -155,7 +155,7 @@ jQuery( document ).ready(function(){
     wp.media.model.settings.post.id = wp_media_post_id;
   });
 
-  jQuery('#favicon_load').live('click', function( event ){
+  jQuery('input#favicon').live('click', function( event ){
 
     event.preventDefault();
 
@@ -187,13 +187,13 @@ jQuery( document ).ready(function(){
         success: function(data){ // Show returned data using the function.
             jQuery("#new_favicon").remove();
             jQuery("#favicon_init").remove();
-            jQuery("#favicon_load").after("<img id=new_favicon src=" + fav_attach.url + ">");
-            jQuery("#new_favicon").after("<button id=logo_remove>Remove Image</button>");
+            jQuery("#favicon").after("<img id=new_favicon src=" + fav_attach.url + ">");
+            jQuery("#new_favicon").after("<button id=favicon_remove>Remove Image</button>");
             jQuery(".media-modal-close").click();
             jQuery("button.favicon_removal").remove();
         }
         }).done(function(){
-          jQuery("button#logo_remove").on("click", function(){
+          jQuery("button#favicon_remove").on("click", function(){
             event.preventDefault();
             jQuery.ajax({
               type: 'POST',
