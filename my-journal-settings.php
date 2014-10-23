@@ -114,6 +114,7 @@ function my_admin_init() {
 
     register_setting( 'my-theme-options', 'social-media-options');
     add_settings_section( 'social_general', 'Social Media Settings', 'my_social_general', 'my-theme-options' );
+    add_settings_field('social_option', 'Display Social Media? ', 'social_option', 'my-theme-options', 'social_general'); 
     add_settings_field('twitter_name', 'Twitter Name', 'twitter_name', 'my-theme-options', 'social_general'); 
     add_settings_field('fb_name', 'Facebook Name', 'fb_name', 'my-theme-options', 'social_general');
     add_settings_field('email_address', 'Email Address', 'email_address', 'my-theme-options', 'social_general');
@@ -401,3 +402,14 @@ function email_address(){
     echo '<input id="email_address"  name="social-media-options[email_address]" type="text" value="' . $email_address .'" />';
 
 }
+
+function social_option(){
+    $options = get_option( 'social-media-options' );
+    ?>
+    Yes
+    <input id="social_yes" type="radio" name="social-media-options[social_option]" value="yes"<?php checked( 'yes' == $options['social_option'] ); ?> />
+    No
+    <input id="social_no" type="radio" name="social-media-options[social_option]" value="no"<?php checked( 'no' == $options['social_option'] ); ?> />
+    <?php
+}
+

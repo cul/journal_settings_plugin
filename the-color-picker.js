@@ -220,6 +220,22 @@ jQuery( document ).ready(function(){
     wp.media.model.settings.post.id = wp_media_post_id;
   });
 
+  jQuery("#email_address").parent().parent().hide();
+  jQuery("#fb_name").parent().parent().hide();
+  jQuery("#twitter_name").parent().parent().hide();
+
+
+  jQuery("#social_yes").on("click", function(){
+    jQuery("#email_address").parent().parent().show();
+    jQuery("#fb_name").parent().parent().show();
+    jQuery("#twitter_name").parent().parent().show();
+  });
+
+  jQuery("#social_no").on("click", function(){
+    jQuery("#email_address").parent().parent().hide();
+    jQuery("#fb_name").parent().parent().hide();
+    jQuery("#twitter_name").parent().parent().hide();
+  });
 
 });
 
