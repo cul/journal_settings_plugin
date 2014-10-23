@@ -22,6 +22,8 @@ function my_admin_scripts() {
     wp_localize_script( 'the-color-picker', 'backgroundSelector', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_localize_script( 'the-color-picker', 'backgroundRemove', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_localize_script( 'the-color-picker', 'logoRemove', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+    wp_localize_script( 'the-color-picker', 'faviconRemove', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+    wp_localize_script( 'the-color-picker', 'faviconSelector', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_enqueue_media();
 }
 
@@ -29,6 +31,9 @@ add_action("wp_ajax_logo_save", "logo_save");
 add_action("wp_ajax_background_image_save", "background_image_save");
 add_action("wp_ajax_background_image_remove", "background_image_remove");
 add_action("wp_ajax_logo_remove", "logo_remove");
+add_action("wp_ajax_favicon_save", "favicon_save");
+add_action("wp_ajax_favicon_remove", "favicon_remove");
+
 
 function logo_save(){
    update_option('logo_url', $_POST['logo_url']);
@@ -44,6 +49,14 @@ function background_image_remove(){
 
 function logo_remove(){
     delete_option('logo_url');
+}
+
+function favicon_save(){
+   update_option('favicon_url', $_POST['favicon_url']);
+}
+
+function favicon_remove(){
+    delete_option('favicon_url');
 }
 
 function my_theme_options() {
@@ -67,6 +80,7 @@ function my_theme_options() {
 function my_admin_init() {
     register_setting( 'my-theme-options', 'my-theme-options', 'validate_setting' );
     add_settings_section( 'section_general', 'Style & Color Settings', 'my_section_general', 'my-theme-options' );
+    add_settings_field('favicon', 'Favicon', 'favicon_load', 'my-theme-options', 'section_general');
     add_settings_field('logo', 'Logo:', 'logo_setting', 'my-theme-options', 'section_general');
     add_settings_field('back_image', 'Background Image:', 'back_image', 'my-theme-options', 'section_general');
     add_settings_field( 'back_color', 'Background Color', 'my_background_color', 'my-theme-options', 'section_general' );
@@ -102,6 +116,15 @@ function my_section_general() {
     _e( 'Edit your journal\'s settings' );
 }
 
+function favicon_load() {
+    echo '<input id="favicon_load" type="file" name="favicon" />';
+    $current_favicon = get_option('favicon_url');
+    if($current_favicon){
+        echo '<img id="favicon_init" src="'. $current_favicon .'"></br>';
+    }
+
+ }
+
 //logo uploader
 function logo_setting() {
  	echo '<input id="logo" type="file" name="logo" />';
@@ -109,8 +132,6 @@ function logo_setting() {
     if($current_logo){
         echo '<img id="logo_init" src="'. $current_logo .'"></br>';
     }
-
-
 
  }
 

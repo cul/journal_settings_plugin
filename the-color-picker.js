@@ -22,6 +22,7 @@ jQuery( document ).ready(function(){
 
     var file_frame;
     var file_frame_two;
+    var file_frame_three;
 
   jQuery('#logo').live('click', function( event ){
 
@@ -154,7 +155,70 @@ jQuery( document ).ready(function(){
     wp.media.model.settings.post.id = wp_media_post_id;
   });
 
-  
+  jQuery('#favicon_load').live('click', function( event ){
+
+    event.preventDefault();
+
+    // If the media frame already exists, reopen it.
+    if ( file_frame_three ) {
+      file_frame_three.open();
+      return;
+    }
+
+    // Create the media frame.
+    file_frame_three = wp.media.frames.file_frame_three = wp.media({
+      title: jQuery( this ).data( 'uploader_title' ),
+      button: {
+        text: jQuery( this ).data( 'uploader_button_text' ),
+      },
+      multiple: false  // Set to true to allow multiple files to be selected
+    });
+
+    // When an image is selected, run a callback.
+    file_frame_three.on( 'select', function() {
+      // We set multiple to false so only get one image from the uploader
+      var fav_attach = file_frame_three.state().get('selection').first().toJSON();
+
+      // Do something with attachment.id and/or attachment.url here
+      jQuery.ajax({
+        type: 'POST',   // Adding Post method
+        url: faviconSelector.ajaxurl, // Including ajax file
+        data: {"action": "favicon_save", "favicon_url": fav_attach.url }, // Sending data dname to post_word_count function.
+        success: function(data){ // Show returned data using the function.
+            jQuery("#new_favicon").remove();
+            jQuery("#favicon_init").remove();
+            jQuery("#favicon_load").after("<img id=new_favicon src=" + fav_attach.url + ">");
+            jQuery("#new_favicon").after("<button id=logo_remove>Remove Image</button>");
+            jQuery(".media-modal-close").click();
+            jQuery("button.favicon_removal").remove();
+        }
+        }).done(function(){
+          jQuery("button#logo_remove").on("click", function(){
+            event.preventDefault();
+            jQuery.ajax({
+              type: 'POST',
+              url: faviconRemove.ajaxurl,
+              data: {"action": "favicon_remove"},
+              success: function(data){
+                jQuery("img#new_favicon").remove();
+                jQuery("img#favicon_init").remove();
+                jQuery("button#favicon_remove").remove();
+              }
+            });
+          });
+        });
+
+
+    });
+
+    // Finally, open the modal
+    file_frame_three.open();
+  });
+
+  // Restore the main ID when the add media button is pressed
+  jQuery('a.add_media').on('click', function() {
+    wp.media.model.settings.post.id = wp_media_post_id;
+  });
 
 });
 
@@ -184,6 +248,21 @@ jQuery( document ).ready(function(){
                 jQuery("img#new_back_img").remove();
                 jQuery("img#back_image_init").remove();
                 jQuery("button.background_removal").remove();
+              }
+            });
+          });
+
+  jQuery("#favicon_init").after("<button class=favicon_removal>Remove Image</button>");
+  jQuery("button.favicon_removal").on("click", function(){
+            event.preventDefault();
+            jQuery.ajax({
+              type: 'POST',
+              url: faviconRemove.ajaxurl,
+              data: {"action": "favicon_remove"},
+              success: function(data){
+                jQuery("img#new_favicon").remove();
+                jQuery("img#favicon_init").remove();
+                jQuery("button.favicon_removal").remove();
               }
             });
           });
