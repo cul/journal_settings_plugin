@@ -237,6 +237,12 @@ jQuery( document ).ready(function(){
     jQuery("#twitter_name").parent().parent().hide();
   });
 
+  if(jQuery("#social_yes").is(':checked')){
+    jQuery("#email_address").parent().parent().show();
+    jQuery("#fb_name").parent().parent().show();
+    jQuery("#twitter_name").parent().parent().show();
+  }
+
 });
 
   jQuery("#logo_init").after("<button class=logo_removal>Remove Image</button>");
