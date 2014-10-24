@@ -73,7 +73,11 @@ function my_theme_options() {
         <h2>Journal Settings</h2>
 
         <h3 class="nav-tab-wrapper">
-            <p  class="nav-tab active" id="style">
+            <p  class="nav-tab active" id="general_admin">
+                General
+
+            </p>
+            <p  class="nav-tab" id="style">
                 Style & Color
 
             </p><p class="nav-tab" id="footer" >
@@ -122,13 +126,17 @@ function my_admin_init() {
     add_settings_field( 'issn_print', 'ISSN(print)', 'my_print_issn', 'my-theme-options', 'footer_general' );
     add_settings_field( 'issn_online', 'ISSN(online)', 'my_online_issn', 'my-theme-options', 'footer_general' );
     add_settings_field('ac_partner', 'Academic Commons Partner?', 'ac_partner_setting', 'my-theme-options', 'footer_general');
-    add_settings_field('full_text_setting', 'This site displays: ', 'full_text_setting', 'my-theme-options', 'footer_general');
 
     register_setting( 'my-theme-options', 'social-media-options');
     add_settings_section( 'social_general', 'Social Media Settings', 'my_social_general', 'my-theme-options' );
     add_settings_field('twitter_name', 'Twitter Name', 'twitter_name', 'my-theme-options', 'social_general'); 
     add_settings_field('fb_name', 'Facebook Name', 'fb_name', 'my-theme-options', 'social_general');
     add_settings_field('email_address', 'Email Address', 'email_address', 'my-theme-options', 'social_general');
+
+    register_setting( 'my-theme-options', 'general-options');
+    add_settings_section( 'options_general', 'General Settings', 'my_options_general', 'my-theme-options' );
+    add_settings_field('site_desc', 'Description', 'site_desc', 'my-theme-options', 'options_general'); 
+    add_settings_field('full_text_setting', 'This site displays: ', 'full_text_setting', 'my-theme-options', 'options_general');
 }
 add_action( 'admin_init', 'my_admin_init' );
 
@@ -366,12 +374,12 @@ function custom_copyright(){
 
 
 function full_text_setting(){
-    $options = get_option( 'my-footer-options' );
+    $options = get_option( 'general-options' );
     ?>
     Abstract
-    <input type="radio" name="my-footer-options[full_text_setting]" value="abstract"<?php checked( 'abstract' == $options['full_text_setting'] ); ?> />
+    <input type="radio" name="general-options[full_text_setting]" value="abstract"<?php checked( 'abstract' == $options['full_text_setting'] ); ?> />
     Full Text
-    <input type="radio" name="my-footer-options[full_text_setting]" value="full_text"<?php checked( 'full_text' == $options['full_text_setting'] ); ?> />
+    <input type="radio" name="general-options[full_text_setting]" value="full_text"<?php checked( 'full_text' == $options['full_text_setting'] ); ?> />
     <?php
 }
 
@@ -422,5 +430,17 @@ function social_option(){
     No
     <input id="social_no" type="radio" name="social-media-options[social_option]" value="no"<?php checked( 'no' == $options['social_option'] ); ?> />
     <?php
+}
+
+function my_options_general() {
+    
+}
+
+function site_desc() {
+    $options = get_option( 'general-options' );
+    $desc = ( $options['site_desc'] != "" ) ? sanitize_text_field( $options['site_desc'] ) : '';
+    echo '<input id="site_desc" name="general-options[site_desc]" type="text" value="' . $desc .'" />';
+    echo '<p>*This will appear on your site\'s home page. Please limit to 55 words or less.</p>';
+
 }
 
