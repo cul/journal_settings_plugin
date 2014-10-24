@@ -133,7 +133,7 @@ function my_admin_init() {
     add_settings_field('fb_name', 'Facebook Name', 'fb_name', 'my-theme-options', 'social_general');
     add_settings_field('email_address', 'Email Address', 'email_address', 'my-theme-options', 'social_general');
 
-    register_setting( 'my-theme-options', 'general-options');
+    register_setting( 'my-theme-options', 'general-options', 'general_validate');
     add_settings_section( 'options_general', 'General Settings', 'my_options_general', 'my-theme-options' );
     add_settings_field('site_desc', 'Description', 'site_desc', 'my-theme-options', 'options_general'); 
     add_settings_field('full_text_setting', 'This site displays: ', 'full_text_setting', 'my-theme-options', 'options_general');
@@ -442,5 +442,17 @@ function site_desc() {
     echo '<input id="site_desc" name="general-options[site_desc]" type="text" value="' . $desc .'" />';
     echo '<p>*This will appear on your site\'s home page. Please limit to 55 words or less.</p>';
 
+}
+
+function general_validate($input){
+    $output = get_option( 'general-options' );
+    $words = explode(" ", $input['site_desc']);
+    $count = count($words);
+    if ( !empty( $input['site_desc'] ) && ($count <= 55))
+        $output['site_desc'] = $input['site_desc'];
+    else
+        add_settings_error( 'my-theme-options', 'invalid-length', 'You must enter a site description of 55 words of less.' );
+
+    return $output;
 }
 
