@@ -220,8 +220,6 @@ jQuery( document ).ready(function(){
     wp.media.model.settings.post.id = wp_media_post_id;
   });
 
-  
-  //trying out the tabs
 
   //hides everything
   jQuery("#twitter_name").parent().parent().parent().parent().parent().contents().hide();
@@ -234,108 +232,6 @@ jQuery( document ).ready(function(){
     jQuery("#site_desc").parent().parent().parent().parent().prev().show();
     jQuery("#journal_settings_submit").parent().css("display", "block").show();
   
-  //social media tab on click
-  jQuery("#social_media.nav-tab").on("click", function(){
-    event.preventDefault();
-    jQuery("#ac_partner").parent().parent().parent().hide();
-    jQuery("#ac_partner").parent().parent().parent().parent().prev().hide();
-
-    jQuery("#logo").parent().parent().parent().hide();
-    jQuery("#logo").parent().parent().parent().parent().prev().hide();
-
-    jQuery("#site_desc").parent().parent().parent().hide();
-    jQuery("#site_desc").parent().parent().parent().parent().prev().hide();
-
-    jQuery("#social_media.nav-tab").addClass("active");
-    jQuery("#style.nav-tab").removeClass("active");
-    jQuery("#footer.nav-tab").removeClass("active");
-    jQuery("#general_admin").removeClass("active");
-
-    jQuery("#twitter_name").parent().parent().parent().css( "display", "block");
-    jQuery("#twitter_name").parent().parent().parent().show();
-    jQuery("#twitter_name").parent().parent().parent().parent().prev().css("display", "block");
-    jQuery("#twitter_name").parent().parent().parent().parent().prev().next().css("display", "block");
-    jQuery("#twitter_name").parent().parent().parent().parent().prev().show();
-    jQuery("#journal_settings_submit").parent().css("display", "block").show();
-  });
-
-  //footer tab on click
-  jQuery("#footer.nav-tab").on("click", function(){
-    event.preventDefault();
-    jQuery("#twitter_name").parent().parent().parent().hide();
-    jQuery("#twitter_name").parent().parent().parent().parent().prev().hide();
-
-    jQuery("#logo").parent().parent().parent().hide();
-    jQuery("#logo").parent().parent().parent().parent().prev().hide();
-
-    jQuery("#site_desc").parent().parent().parent().hide();
-    jQuery("#site_desc").parent().parent().parent().parent().prev().hide();
-
-    jQuery("#footer.nav-tab").addClass("active");
-    jQuery("#style.nav-tab").removeClass("active");
-    jQuery("#social_media.nav-tab").removeClass("active");
-    jQuery("#general_admin").removeClass("active");
-
-    jQuery("#ac_partner").parent().parent().parent().css( "display", "block");
-    jQuery("#ac_partner").parent().parent().parent().show();
-    jQuery("#ac_partner").parent().parent().parent().parent().prev().css("display", "block");
-    jQuery("#ac_partner").parent().parent().parent().parent().prev().next().css("display", "block");
-    jQuery("#ac_partner").parent().parent().parent().parent().prev().show();
-    jQuery("#journal_settings_submit").parent().css("display", "block").show();
-  });
-
-  //style tab on click
-  jQuery("#style.nav-tab").on("click", function(){
-    event.preventDefault();
-    jQuery("#ac_partner").parent().parent().parent().hide();
-    jQuery("#ac_partner").parent().parent().parent().parent().prev().hide();
-
-    jQuery("#twitter_name").parent().parent().parent().hide();
-    jQuery("#twitter_name").parent().parent().parent().parent().prev().hide();
-
-    jQuery("#site_desc").parent().parent().parent().hide();
-    jQuery("#site_desc").parent().parent().parent().parent().prev().hide();
-
-    jQuery("#style.nav-tab").addClass("active");
-    jQuery("#footer.nav-tab").removeClass("active");
-    jQuery("#social_media.nav-tab").removeClass("active");
-    jQuery("#general_admin").removeClass("active");
-
-    jQuery("#logo").parent().parent().parent().css( "display", "block");
-    jQuery("#logo").parent().parent().parent().show();
-    jQuery("#logo").parent().parent().parent().parent().prev().css("display", "block");
-    jQuery("#logo").parent().parent().parent().parent().prev().next().css("display", "block");
-    jQuery("#logo").parent().parent().parent().parent().prev().show();
-    jQuery("#journal_settings_submit").parent().css("display", "block").show();
-  });
-
-  //general tab on click
-  jQuery("#general_admin").on("click", function(){
-    event.preventDefault();
-    jQuery("#ac_partner").parent().parent().parent().hide();
-    jQuery("#ac_partner").parent().parent().parent().parent().prev().hide();
-
-    jQuery("#twitter_name").parent().parent().parent().hide();
-    jQuery("#twitter_name").parent().parent().parent().parent().prev().hide();
-
-    jQuery("#logo").parent().parent().parent().hide();
-    jQuery("#logo").parent().parent().parent().parent().prev().hide();
-
-    jQuery("#general_admin").addClass("active");
-    jQuery("#footer.nav-tab").removeClass("active");
-    jQuery("#social_media.nav-tab").removeClass("active");
-    jQuery("#style.nav-tab").removeClass("active");
-
-    jQuery("#site_desc").parent().parent().parent().css( "display", "block");
-    jQuery("#site_desc").parent().parent().parent().show();
-    jQuery("#site_desc").parent().parent().parent().parent().prev().css("display", "block");
-    jQuery("#site_desc").parent().parent().parent().parent().prev().next().css("display", "block");
-    jQuery("#site_desc").parent().parent().parent().parent().prev().show();
-    jQuery("#journal_settings_submit").parent().css("display", "block").show();
-
-
-  })
-
 
 });
 
@@ -383,5 +279,32 @@ jQuery( document ).ready(function(){
               }
             });
           });
+
+  function tabWork(args){
+    args.forEach(function(tab){ 
+      var that = tab[0];
+      jQuery((tab[0])).on("click", function(){
+        jQuery(tab[0]).addClass("active");
+
+        jQuery(tab[1]).parent().parent().parent().css( "display", "block");
+        jQuery(tab[1]).parent().parent().parent().show();
+        jQuery(tab[1]).parent().parent().parent().parent().prev().css("display", "block");
+        jQuery(tab[1]).parent().parent().parent().parent().prev().next().css("display", "block");
+        jQuery(tab[1]).parent().parent().parent().parent().prev().show();
+        jQuery("#journal_settings_submit").parent().css("display", "block").show();
+        args.forEach(function(other_tabs){
+          if( other_tabs[0] != that){
+            jQuery(other_tabs[0]).removeClass("active");
+            jQuery(other_tabs[1]).parent().parent().parent().hide();
+            jQuery(other_tabs[1]).parent().parent().parent().parent().prev().hide();
+          }
+        });
+      });
+    });
+     
+  }
+
+  tabWork([[ "#style.nav-tab","#logo"],["#general_admin", "#site_desc"], ["#footer.nav-tab", "#ac_partner"], ["#social_media.nav-tab", "#twitter_name"]]);
+
 
 
