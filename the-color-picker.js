@@ -235,76 +235,76 @@ jQuery( document ).ready(function(){
 
 });
 
-  jQuery("#logo_init").after("<button class=logo_removal>Remove Image</button>");
-  jQuery(".logo_removal").on("click", function(){
-                          event.preventDefault();
-                          jQuery.ajax({
-                            type: 'POST',
-                            url: logoRemove.ajaxurl,
-                            data: {"action": "logo_remove"},
-                            success: function(data){
-                              jQuery("img#new_logo").remove();
-                              jQuery("img#logo_init").remove();
-                              jQuery("button.logo_removal").remove();
-                            }
-                          });
+jQuery("#logo_init").after("<button class=logo_removal>Remove Image</button>");
+jQuery(".logo_removal").on("click", function(){
+                        event.preventDefault();
+                        jQuery.ajax({
+                          type: 'POST',
+                          url: logoRemove.ajaxurl,
+                          data: {"action": "logo_remove"},
+                          success: function(data){
+                            jQuery("img#new_logo").remove();
+                            jQuery("img#logo_init").remove();
+                            jQuery("button.logo_removal").remove();
+                          }
                         });
+                      });
 
-  jQuery("#back_image_init").after("<button class=background_removal>Remove Image</button>");
-  jQuery("button.background_removal").on("click", function(){
-            event.preventDefault();
-            jQuery.ajax({
-              type: 'POST',
-              url: backgroundRemove.ajaxurl,
-              data: {"action": "background_image_remove"},
-              success: function(data){
-                jQuery("img#new_back_img").remove();
-                jQuery("img#back_image_init").remove();
-                jQuery("button.background_removal").remove();
-              }
-            });
+jQuery("#back_image_init").after("<button class=background_removal>Remove Image</button>");
+jQuery("button.background_removal").on("click", function(){
+          event.preventDefault();
+          jQuery.ajax({
+            type: 'POST',
+            url: backgroundRemove.ajaxurl,
+            data: {"action": "background_image_remove"},
+            success: function(data){
+              jQuery("img#new_back_img").remove();
+              jQuery("img#back_image_init").remove();
+              jQuery("button.background_removal").remove();
+            }
           });
-
-  jQuery("#favicon_init").after("<button class=favicon_removal>Remove Image</button>");
-  jQuery("button.favicon_removal").on("click", function(){
-            event.preventDefault();
-            jQuery.ajax({
-              type: 'POST',
-              url: faviconRemove.ajaxurl,
-              data: {"action": "favicon_remove"},
-              success: function(data){
-                jQuery("img#new_favicon").remove();
-                jQuery("img#favicon_init").remove();
-                jQuery("button.favicon_removal").remove();
-              }
-            });
-          });
-
-  function tabWork(args){
-    args.forEach(function(tab){ 
-      var that = tab[0];
-      jQuery((tab[0])).on("click", function(){
-        jQuery(tab[0]).addClass("active");
-
-        jQuery(tab[1]).parent().parent().parent().css( "display", "block");
-        jQuery(tab[1]).parent().parent().parent().show();
-        jQuery(tab[1]).parent().parent().parent().parent().prev().css("display", "block");
-        jQuery(tab[1]).parent().parent().parent().parent().prev().next().css("display", "block");
-        jQuery(tab[1]).parent().parent().parent().parent().prev().show();
-        jQuery("#journal_settings_submit").parent().css("display", "block").show();
-        args.forEach(function(other_tabs){
-          if( other_tabs[0] != that){
-            jQuery(other_tabs[0]).removeClass("active");
-            jQuery(other_tabs[1]).parent().parent().parent().hide();
-            jQuery(other_tabs[1]).parent().parent().parent().parent().prev().hide();
-          }
         });
+
+jQuery("#favicon_init").after("<button class=favicon_removal>Remove Image</button>");
+jQuery("button.favicon_removal").on("click", function(){
+          event.preventDefault();
+          jQuery.ajax({
+            type: 'POST',
+            url: faviconRemove.ajaxurl,
+            data: {"action": "favicon_remove"},
+            success: function(data){
+              jQuery("img#new_favicon").remove();
+              jQuery("img#favicon_init").remove();
+              jQuery("button.favicon_removal").remove();
+            }
+          });
+        });
+
+function tabWork(args){
+  args.forEach(function(tab){ 
+    var that = tab[0];
+    jQuery((tab[0])).on("click", function(){
+      jQuery(tab[0]).addClass("active");
+
+      jQuery(tab[1]).parent().parent().parent().css( "display", "block");
+      jQuery(tab[1]).parent().parent().parent().show();
+      jQuery(tab[1]).parent().parent().parent().parent().prev().css("display", "block");
+      jQuery(tab[1]).parent().parent().parent().parent().prev().next().css("display", "block");
+      jQuery(tab[1]).parent().parent().parent().parent().prev().show();
+      jQuery("#journal_settings_submit").parent().css("display", "block").show();
+      args.forEach(function(other_tabs){
+        if( other_tabs[0] != that){
+          jQuery(other_tabs[0]).removeClass("active");
+          jQuery(other_tabs[1]).parent().parent().parent().hide();
+          jQuery(other_tabs[1]).parent().parent().parent().parent().prev().hide();
+        }
       });
     });
-     
-  }
+  });
+   
+}
 
-  tabWork([[ "#style.nav-tab","#logo"],["#general_admin", "#site_desc"], ["#footer.nav-tab", "#ac_partner"], ["#social_media.nav-tab", "#twitter_name"]]);
+tabWork([[ "#style.nav-tab","#logo"],["#general_admin", "#site_desc"], ["#footer.nav-tab", "#ac_partner"], ["#social_media.nav-tab", "#twitter_name"]]);
 
 
 
