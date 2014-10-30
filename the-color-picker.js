@@ -234,7 +234,7 @@ jQuery( document ).ready(function(){
   
     //get site description
     jQuery("#journal_settings_submit").on('click', function(){
-      var desc = jQuery("#site_desc").val();
+      var desc = document.getElementById("site_desc_ifr").contentDocument.body.innerHTML;
       var better_desc = desc.replace("\\", '');
       jQuery.ajax({
         type: 'POST',
