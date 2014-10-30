@@ -235,12 +235,21 @@ jQuery( document ).ready(function(){
     //get site description
     jQuery("#journal_settings_submit").on('click', function(){
       var desc = jQuery("#site_desc").val();
-      var better_desc = desc.replace("\\", '');
+      if( desc.length > 0){
+       jQuery.ajax({
+        type: 'POST',
+        url: descAdd.ajaxurl,
+        data: {"action": "desc_add", "site_desc": desc}
+      }); 
+     }else{
+      var other_desc = document.getElementById("site_desc_ifr").contentDocument.body.innerHTML;
       jQuery.ajax({
         type: 'POST',
         url: descAdd.ajaxurl,
-        data: {"action": "desc_add", "site_desc": better_desc}
+        data: {"action": "desc_add", "site_desc": other_desc}
       });
+     }
+      
     });
 
 

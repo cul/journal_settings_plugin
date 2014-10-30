@@ -455,4 +455,6 @@ function site_desc() {
     echo '<p>*This will appear on your site\'s home page. Please limit to 55 words or less.</p>';
 }
 
+remove_filter('site_desc','wpautop');
+
 
