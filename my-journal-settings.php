@@ -26,6 +26,7 @@ function my_admin_scripts() {
     wp_localize_script( 'the-color-picker', 'faviconRemove', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_localize_script( 'the-color-picker', 'faviconSelector', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_localize_script( 'the-color-picker', 'socialAdd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+    wp_localize_script( 'the-color-picker', 'descAdd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_enqueue_media();
 }
 
@@ -36,6 +37,7 @@ add_action("wp_ajax_logo_remove", "logo_remove");
 add_action("wp_ajax_favicon_save", "favicon_save");
 add_action("wp_ajax_favicon_remove", "favicon_remove");
 add_action("wp_ajax_social_add", "social_add");
+add_action("wp_ajax_desc_add", "desc_add");
 
 
 function logo_save(){
@@ -64,6 +66,14 @@ function favicon_remove(){
 
 function social_add(){
     update_option('social_option', true);
+}
+
+function desc_add(){
+    $words = explode(" ", $_POST['site_desc']);
+    $count = count($words);
+    if ( !empty( $_POST['site_desc'] ) && ($count <= 55)){
+        update_option('site_desc', $_POST['site_desc']);
+    }
 }
 
 function my_theme_options() {
@@ -133,12 +143,13 @@ function my_admin_init() {
     add_settings_field('fb_name', 'Facebook Name', 'fb_name', 'my-theme-options', 'social_general');
     add_settings_field('email_address', 'Email Address', 'email_address', 'my-theme-options', 'social_general');
 
-    register_setting( 'my-theme-options', 'general-options', 'general_validate');
+    register_setting( 'my-theme-options', 'general-options');
     add_settings_section( 'options_general', 'General Settings', 'my_options_general', 'my-theme-options' );
     add_settings_field('site_desc', 'Description', 'site_desc', 'my-theme-options', 'options_general'); 
     add_settings_field('full_text_setting', 'This site displays: ', 'full_text_setting', 'my-theme-options', 'options_general');
 }
 add_action( 'admin_init', 'my_admin_init' );
+
 
 function my_section_general() {
     
@@ -436,23 +447,12 @@ function my_options_general() {
     
 }
 
+
 function site_desc() {
-    $options = get_option( 'general-options' );
-    $desc = ( $options['site_desc'] != "" ) ? sanitize_text_field( $options['site_desc'] ) : '';
-    echo '<input id="site_desc" name="general-options[site_desc]" type="text" value="' . $desc .'" />';
+    $desc = get_option( 'site_desc' );
+    $args = array("textarea_name" => "site_desc");
+    echo wp_editor($desc , 'site_desc', $args);
     echo '<p>*This will appear on your site\'s home page. Please limit to 55 words or less.</p>';
-
 }
 
-function general_validate($input){
-    $output = get_option( 'general-options' );
-    $words = explode(" ", $input['site_desc']);
-    $count = count($words);
-    if ( !empty( $input['site_desc'] ) && ($count <= 55))
-        $output['site_desc'] = $input['site_desc'];
-    else
-        add_settings_error( 'my-theme-options', 'invalid-length', 'You must enter a site description of 55 words of less.' );
-
-    return $output;
-}
 

@@ -225,13 +225,26 @@ jQuery( document ).ready(function(){
   jQuery("#twitter_name").parent().parent().parent().parent().parent().contents().hide();
 
   //showing style tab by default
-    jQuery("#site_desc").parent().parent().parent().css( "display", "block");
-    jQuery("#site_desc").parent().parent().parent().show();
-    jQuery("#site_desc").parent().parent().parent().parent().prev().css("display", "block");
-    jQuery("#site_desc").parent().parent().parent().parent().prev().next().css("display", "block");
-    jQuery("#site_desc").parent().parent().parent().parent().prev().show();
+    jQuery("#wp-site_desc-wrap").parent().parent().parent().css( "display", "block");
+    jQuery("#wp-site_desc-wrap").parent().parent().parent().show();
+    jQuery("#wp-site_desc-wrap").parent().parent().parent().parent().prev().css("display", "block");
+    jQuery("#wp-site_desc-wrap").parent().parent().parent().parent().prev().next().css("display", "block");
+    jQuery("#wp-site_desc-wrap").parent().parent().parent().parent().prev().show();
     jQuery("#journal_settings_submit").parent().css("display", "block").show();
   
+    //get site description
+    jQuery("#journal_settings_submit").on('click', function(){
+      var desc = jQuery("#site_desc").val();
+      var better_desc = desc.replace("\\", '');
+      jQuery.ajax({
+        type: 'POST',
+        url: descAdd.ajaxurl,
+        data: {"action": "desc_add", "site_desc": better_desc}
+      });
+    });
+
+
+
 
 });
 
@@ -304,7 +317,7 @@ function tabWork(args){
    
 }
 
-tabWork([[ "#style.nav-tab","#logo"],["#general_admin", "#site_desc"], ["#footer.nav-tab", "#ac_partner"], ["#social_media.nav-tab", "#twitter_name"]]);
+tabWork([[ "#style.nav-tab","#logo"],["#general_admin", "#wp-site_desc-wrap"], ["#footer.nav-tab", "#ac_partner"], ["#social_media.nav-tab", "#twitter_name"]]);
 
 
 
