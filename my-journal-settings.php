@@ -124,7 +124,7 @@ function my_admin_init() {
     add_settings_field( 'menu_hover_color', 'Menu Background Color (Hover)', 'menu_hover_color', 'my-theme-options', 'section_general' );
     add_settings_field( 'menu_text_color', 'Menu Text Color', 'menu_text_color_set', 'my-theme-options', 'section_general' );
     add_settings_field( 'menu_hover_text_color', 'Menu Text Color (Hover)', 'menu_text_hover_color', 'my-theme-options', 'section_general' );
-	
+	add_settings_field( 'active_menu_color', 'Menu Background Color (Active)', 'active_menu_color', 'my-theme-options', 'section_general' );
     
     register_setting( 'my-theme-options', 'my-footer-options');
     add_settings_section( 'footer_general', 'Footer Settings', 'my_footer_general', 'my-theme-options' );
@@ -247,6 +247,13 @@ function menu_text_hover_color() {
 
 }
 
+function active_menu_color() {
+    $options = get_option( 'my-theme-options' );
+    $color = ( $options['active_menu_color'] != "" ) ? sanitize_text_field( $options['active_menu_color'] ) : '#3D9B0C';
+    echo '<input id="active_menu_color" class="color" name="my-theme-options[active_menu_color]" type="text" value="' . $color .'" />';
+
+}
+
 
 //validating uploaded images
 function validate_setting($my_theme_options) {
@@ -290,6 +297,7 @@ function my_wp_head() {
     $menu_hover_color = $options['menu_hover_color'];
     $menu_text_hover_color = $options['menu_text_hover_color'];
     $back_image = get_option('background_image_url');
+    $active_menu = $options['active_menu_color'];
     ?>
         <style> a { color: <?php echo $color ?>; }
     	   body {background-color: <?php echo $background_color ?>;
@@ -306,6 +314,9 @@ function my_wp_head() {
            div.navbar-header a.navbar-brand{ color: <?php echo $menu_text_color ?>; }
            div.navbar-header a.navbar-brand:hover{ background-color: <?php echo $menu_hover_color ?>;
                 color: <?php echo $menu_text_hover_color ?>;}
+           #cujo-navbar li.active a, div#bs-example-navbar-collapse-1 li.active a{
+                background-color: <?php echo $active_menu ?>; 
+           }
            div#bs-example-navbar-collapse-1 a:hover{
             color: <?php echo $menu_text_hover_color ?>;
            }
