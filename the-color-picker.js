@@ -235,7 +235,7 @@ jQuery( document ).ready(function(){
     //get site description
     jQuery("#journal_settings_submit").on('click', function(){
       var desc = jQuery("#site_desc").val();
-      if( desc.length > 0){
+      if( desc !== ""){
        jQuery.ajax({
         type: 'POST',
         url: descAdd.ajaxurl,

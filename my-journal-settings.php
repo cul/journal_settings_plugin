@@ -141,6 +141,7 @@ function my_admin_init() {
     add_settings_section( 'social_general', 'Social Media Settings', 'my_social_general', 'my-theme-options' );
     add_settings_field('twitter_name', 'Twitter Name', 'twitter_name', 'my-theme-options', 'social_general'); 
     add_settings_field('fb_name', 'Facebook Name', 'fb_name', 'my-theme-options', 'social_general');
+    add_settings_field('linkedin_name', 'LinkedIn Name', 'linkedin_name', 'my-theme-options', 'social_general');
     add_settings_field('email_address', 'Email Address', 'email_address', 'my-theme-options', 'social_general');
 
     register_setting( 'my-theme-options', 'general-options');
@@ -434,6 +435,13 @@ function fb_name(){
     $options = get_option( 'social-media-options' );
     $fb_name = ( $options['fb_name'] != "" ) ? sanitize_text_field( $options['fb_name'] ) : '';
     echo '<input id="fb_name"  placeholder="name" name="social-media-options[fb_name]" type="text" value="' . $fb_name .'" />';
+
+}
+
+function linkedin_name(){
+    $options = get_option( 'social-media-options' );
+    $linkedin_name = ( $options['linkedin_name'] != "" ) ? sanitize_text_field( $options['linkedin_name'] ) : '';
+    echo '<input id="linkedin_name"  placeholder="name" name="social-media-options[linkedin_name]" type="text" value="' . $linkedin_name .'" />';
 
 }
 
