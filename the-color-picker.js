@@ -234,19 +234,19 @@ jQuery( document ).ready(function(){
   
     //get site description
     jQuery("#journal_settings_submit").on('click', function(){
-      var desc = jQuery("#site_desc").val();
-      if( desc !== ""){
+      var other_desc = document.getElementById("site_desc_ifr").contentDocument.body.innerHTML;
+      if( other_desc !== ""){
        jQuery.ajax({
         type: 'POST',
         url: descAdd.ajaxurl,
-        data: {"action": "desc_add", "site_desc": desc}
+        data: {"action": "desc_add", "site_desc": other_desc}
       }); 
      }else{
-      var other_desc = document.getElementById("site_desc_ifr").contentDocument.body.innerHTML;
+      var desc = jQuery("#site_desc").val();
       jQuery.ajax({
         type: 'POST',
         url: descAdd.ajaxurl,
-        data: {"action": "desc_add", "site_desc": other_desc}
+        data: {"action": "desc_add", "site_desc": desc}
       });
      }
       

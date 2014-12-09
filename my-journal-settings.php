@@ -71,7 +71,7 @@ function social_add(){
 function desc_add(){
     $words = explode(" ", $_POST['site_desc']);
     $count = count($words);
-    if ( !empty( $_POST['site_desc'] ) && ($count <= 55)){
+    if ( !empty( $_POST['site_desc'] ) && ($count <= 60)){
         update_option('site_desc', $_POST['site_desc']);
     }
 }
@@ -471,7 +471,7 @@ function site_desc() {
     $desc = get_option( 'site_desc' );
     $args = array("textarea_name" => "site_desc");
     echo wp_editor($desc , 'site_desc', $args);
-    echo '<p>*This will appear on your site\'s home page. Please limit to 55 words or less.</p>';
+    echo '<p>*This will appear on your site\'s home page. Please limit to 55 words or fewer.</p>';
 }
 
 remove_filter('site_desc','wpautop');
