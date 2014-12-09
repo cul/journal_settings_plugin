@@ -469,7 +469,7 @@ function my_options_general() {
 
 function site_desc() {
     $desc = get_option( 'site_desc' );
-    $args = array("textarea_name" => "site_desc");
+    $args = array("textarea_name" => "site_desc", "wpautop" => false);
     echo wp_editor($desc , 'site_desc', $args);
     echo '<p>*This will appear on your site\'s home page. Please limit to 55 words or fewer.</p>';
 }
