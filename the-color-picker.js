@@ -233,21 +233,23 @@ jQuery( document ).ready(function(){
     jQuery("#journal_settings_submit").parent().css("display", "block").show();
   
     //get site description
+    //text tab uses textarea and visual tab uses iframe
+    var original_desc = jQuery("#site_desc").val();
     jQuery("#journal_settings_submit").on('click', function(){
-      var other_desc = document.getElementById("site_desc_ifr").contentDocument.body.innerHTML;
-      if( other_desc !== ""){
+      var desc = jQuery("#site_desc").val();
+      if( jQuery("#mceu_27").css('display') != 'none' && original_desc !== desc){
        jQuery.ajax({
         type: 'POST',
         url: descAdd.ajaxurl,
-        data: {"action": "desc_add", "site_desc": other_desc}
-      }); 
+        data: {"action": "desc_add", "site_desc": desc}
+      }).done(function(){ location.reload(); }); 
      }else{
-      var desc = jQuery("#site_desc").val();
+      var other_desc = document.getElementById("site_desc_ifr").contentDocument.body.innerHTML;
       jQuery.ajax({
         type: 'POST',
         url: descAdd.ajaxurl,
-        data: {"action": "desc_add", "site_desc": desc}
-      });
+        data: {"action": "desc_add", "site_desc": other_desc}
+      }).done(function(){ location.reload(); });
      }
       
     });
