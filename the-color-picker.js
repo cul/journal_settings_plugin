@@ -256,7 +256,7 @@ jQuery( document ).ready(function(){
             jQuery("#menu_logo").after("<img id=new_menu_logo src=" + menu_logo_attachment.url + ">");
             jQuery("#new_menu_logo").after("<button id=menu_logo_remove>Remove Image</button>");
             jQuery(".media-modal-close").click();
-            jQuery("button.menu_logo_remove").remove();
+            jQuery("button.menu_logo_removal").remove();
         }
         }).done(function(){
           jQuery("button#menu_logo_remove").on("click", function(){
@@ -336,6 +336,21 @@ jQuery(".logo_removal").on("click", function(){
                             jQuery("img#new_logo").remove();
                             jQuery("img#logo_init").remove();
                             jQuery("button.logo_removal").remove();
+                          }
+                        });
+                      });
+
+jQuery("#menu_logo_init").after("<button class=menu_logo_removal>Remove Image</button>");
+jQuery(".menu_logo_removal").on("click", function(){
+                        event.preventDefault();
+                        jQuery.ajax({
+                          type: 'POST',
+                          url: menuLogoRemove.ajaxurl,
+                          data: {"action": "menu_logo_remove"},
+                          success: function(data){
+                            jQuery("img#new_menu_logo").remove();
+                            jQuery("img#menu_logo_init").remove();
+                            jQuery("button.menu_logo_removal").remove();
                           }
                         });
                       });
