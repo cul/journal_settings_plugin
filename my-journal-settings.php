@@ -20,9 +20,11 @@ function my_admin_scripts() {
     wp_enqueue_script('the-color-picker', plugins_url('custom-journal-settings/the-color-picker.js'), array( 'jquery' ));
     wp_enqueue_style('journal_settings', plugins_url('custom-journal-settings/journal_settings.css'));
     wp_localize_script( 'the-color-picker', 'logoSelector', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+    wp_localize_script( 'the-color-picker', 'menuLogoSelector', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_localize_script( 'the-color-picker', 'backgroundSelector', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_localize_script( 'the-color-picker', 'backgroundRemove', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_localize_script( 'the-color-picker', 'logoRemove', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+    wp_localize_script( 'the-color-picker', 'menuLogoRemove', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_localize_script( 'the-color-picker', 'faviconRemove', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_localize_script( 'the-color-picker', 'faviconSelector', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
     wp_localize_script( 'the-color-picker', 'socialAdd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
@@ -31,9 +33,11 @@ function my_admin_scripts() {
 }
 
 add_action("wp_ajax_logo_save", "logo_save");
+add_action("wp_ajax_menu_logo_save", "menu_logo_save");
 add_action("wp_ajax_background_image_save", "background_image_save");
 add_action("wp_ajax_background_image_remove", "background_image_remove");
 add_action("wp_ajax_logo_remove", "logo_remove");
+add_action("wp_ajax_menu_logo_remove", "menu_logo_remove");
 add_action("wp_ajax_favicon_save", "favicon_save");
 add_action("wp_ajax_favicon_remove", "favicon_remove");
 add_action("wp_ajax_social_add", "social_add");
@@ -42,6 +46,10 @@ add_action("wp_ajax_desc_add", "desc_add");
 
 function logo_save(){
    update_option('logo_url', $_POST['logo_url']);
+}
+
+function menu_logo_save(){
+   update_option('menu_logo_url', $_POST['menu_logo_url']);
 }
 
 function background_image_save(){
@@ -54,6 +62,10 @@ function background_image_remove(){
 
 function logo_remove(){
     delete_option('logo_url');
+}
+
+function menu_logo_remove(){
+    delete_option('menu_logo_url');
 }
 
 function favicon_save(){
@@ -115,6 +127,7 @@ function my_admin_init() {
     add_settings_section( 'section_general', 'Style & Color Settings', 'my_section_general', 'my-theme-options' );
     add_settings_field('favicon', 'Favicon', 'favicon_load', 'my-theme-options', 'section_general');
     add_settings_field('logo', 'Logo:', 'logo_setting', 'my-theme-options', 'section_general');
+    add_settings_field('menu_logo', 'Menu Logo:', 'menu_logo_setting', 'my-theme-options', 'section_general');
     add_settings_field('back_image', 'Background Image:', 'back_image', 'my-theme-options', 'section_general');
     add_settings_field( 'back_color', 'Background Color', 'my_background_color', 'my-theme-options', 'section_general' );
 	add_settings_field( 'heading_color', 'Heading Color', 'my_heading_color', 'my-theme-options', 'section_general' );
@@ -172,6 +185,15 @@ function logo_setting() {
     $current_logo = get_option('logo_url');
     if($current_logo){
         echo '<img id="logo_init" src="'. $current_logo .'"></br>';
+    }
+
+ }
+
+ function menu_logo_setting() {
+    echo '<input id="menu_logo" type="file" name="menu_logo" />';
+    $current_logo = get_option('menu_logo_url');
+    if($current_logo){
+        echo '<img id="menu_logo_init" src="'. $current_logo .'"></br>';
     }
 
  }

@@ -23,6 +23,7 @@ jQuery( document ).ready(function(){
     var file_frame;
     var file_frame_two;
     var file_frame_three;
+    var file_frame_four;
 
   jQuery('#logo').live('click', function( event ){
 
@@ -213,6 +214,71 @@ jQuery( document ).ready(function(){
 
     // Finally, open the modal
     file_frame_three.open();
+  });
+
+  // Restore the main ID when the add media button is pressed
+  jQuery('a.add_media').on('click', function() {
+    wp.media.model.settings.post.id = wp_media_post_id;
+  });
+
+  jQuery('#menu_logo').live('click', function( event ){
+
+    event.preventDefault();
+
+    // If the media frame already exists, reopen it.
+    if ( file_frame_four ) {
+      file_frame_four.open();
+      return;
+    }
+
+    // Create the media frame.
+    file_frame_four = wp.media.frames.file_frame_four = wp.media({
+      title: jQuery( this ).data( 'uploader_title' ),
+      button: {
+        text: jQuery( this ).data( 'uploader_button_text' ),
+      },
+      multiple: false  // Set to true to allow multiple files to be selected
+    });
+
+    // When an image is selected, run a callback.
+    file_frame_four.on( 'select', function() {
+      // We set multiple to false so only get one image from the uploader
+      var menu_logo_attachment = file_frame_four.state().get('selection').first().toJSON();
+
+      // Do something with attachment.id and/or attachment.url here
+      jQuery.ajax({
+        type: 'POST',   // Adding Post method
+        url: menuLogoSelector.ajaxurl, // Including ajax file
+        data: {"action": "menu_logo_save", "menu_logo_url": menu_logo_attachment.url }, // Sending data dname to post_word_count function.
+        success: function(data){ // Show returned data using the function.
+            jQuery("#new_menu_logo").remove();
+            jQuery("#menu_logo_init").remove();
+            jQuery("#menu_logo").after("<img id=new_menu_logo src=" + menu_logo_attachment.url + ">");
+            jQuery("#new_menu_logo").after("<button id=menu_logo_remove>Remove Image</button>");
+            jQuery(".media-modal-close").click();
+            jQuery("button.menu_logo_remove").remove();
+        }
+        }).done(function(){
+          jQuery("button#menu_logo_remove").on("click", function(){
+            event.preventDefault();
+            jQuery.ajax({
+              type: 'POST',
+              url: menuLogoRemove.ajaxurl,
+              data: {"action": "menu_logo_remove"},
+              success: function(data){
+                jQuery("img#new_menu_logo").remove();
+                jQuery("img#menu_logo_init").remove();
+                jQuery("button#menu_logo_remove").remove();
+              }
+            });
+          });
+        });
+
+
+    });
+
+    // Finally, open the modal
+    file_frame_four.open();
   });
 
   // Restore the main ID when the add media button is pressed
