@@ -261,6 +261,7 @@ jQuery( document ).ready(function(){
         }).done(function(){
           jQuery("button#menu_logo_remove").on("click", function(){
             event.preventDefault();
+            jQuery(this).remove();
             jQuery.ajax({
               type: 'POST',
               url: menuLogoRemove.ajaxurl,

@@ -161,6 +161,7 @@ function my_admin_init() {
     add_settings_section( 'options_general', 'General Settings', 'my_options_general', 'my-theme-options' );
     add_settings_field('site_desc', 'Description', 'site_desc', 'my-theme-options', 'options_general'); 
     add_settings_field('full_text_setting', 'This site displays: ', 'full_text_setting', 'my-theme-options', 'options_general');
+    add_settings_field('site_title_setting', 'Display site title on home page? ', 'site_title_setting', 'my-theme-options', 'options_general');
 }
 add_action( 'admin_init', 'my_admin_init' );
 
@@ -494,6 +495,16 @@ function site_desc() {
     $args = array("textarea_name" => "site_desc", "wpautop" => false);
     echo wp_editor($desc , 'site_desc', $args);
     echo '<p>*This will appear on your site\'s home page. Please limit to 55 words or fewer.</p>';
+}
+
+function site_title_setting(){
+    $options = get_option( 'general-options' );
+    ?>
+    Yes
+    <input type="radio" name="general-options[site_title_setting]" value="yes"<?php checked( 'yes' == $options['site_title_setting'] ); ?> />
+    No
+    <input type="radio" name="general-options[site_title_setting]" value="no"<?php checked( 'no' == $options['site_title_setting'] ); ?> />
+    <?php
 }
 
 remove_filter('site_desc','wpautop');
