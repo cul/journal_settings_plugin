@@ -138,6 +138,7 @@ function my_admin_init() {
     add_settings_field( 'menu_text_color', 'Menu Text Color', 'menu_text_color_set', 'my-theme-options', 'section_general' );
     add_settings_field( 'menu_hover_text_color', 'Menu Text Color (Hover)', 'menu_text_hover_color', 'my-theme-options', 'section_general' );
 	add_settings_field( 'active_menu_color', 'Menu Background Color (Active)', 'active_menu_color', 'my-theme-options', 'section_general' );
+    add_settings_field( 'text_setting', 'Font', 'text_setting', 'my-theme-options', 'section_general' );
     
     register_setting( 'my-theme-options', 'my-footer-options');
     add_settings_section( 'footer_general', 'Footer Settings', 'my_footer_general', 'my-theme-options' );
@@ -279,6 +280,24 @@ function active_menu_color() {
 
 }
 
+function text_setting() {
+    $options = get_option( 'my-theme-options' );
+    $font_selection = ( $options['text_setting'] != "" ) ? sanitize_text_field( $options['text_setting'] ) : '';
+    echo '<select id="text_setting"  name="my-theme-options[text_setting]" >';
+        $fonts = array('Default', 'Serif', 'Sans-serif');
+        $current_font = $font_selection;
+
+    foreach($fonts as $font) {
+        if($font == $current_font) {
+            echo '<option selected="selected" value="' . $font . '">'.$font.'</option>';
+        }else {
+            echo '<option value="' . $font . '">'.$font.'</option>';
+        }
+    }
+    echo '</select>';
+
+}
+
 
 //validating uploaded images
 function validate_setting($my_theme_options) {
@@ -323,11 +342,13 @@ function my_wp_head() {
     $menu_text_hover_color = $options['menu_text_hover_color'];
     $back_image = get_option('background_image_url');
     $active_menu = $options['active_menu_color'];
+    $font = $options['text_setting'];
     ?>
         <style> a { color: <?php echo $color ?>; }
     	   body {background-color: <?php echo $background_color ?>;
     	   		 color: <?php echo $text_color ?>;
                  background-image: url("<?php echo $back_image ?>");
+                 font-family: <?php if($font != 'Default'){ echo $font; } ?>;
                   }
     	   h1, h2, h3, h4 { color: <?php echo $heading_color ?>; }
            div#bs-example-navbar-collapse-1.collapse.navbar-collapse li:hover{
