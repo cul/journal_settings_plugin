@@ -163,7 +163,8 @@ function my_admin_init() {
     add_settings_field('site_desc', 'Description', 'site_desc', 'my-theme-options', 'options_general'); 
     add_settings_field('full_text_setting', 'This site displays: ', 'full_text_setting', 'my-theme-options', 'options_general');
     add_settings_field('site_title_setting', 'Display site title on home page? ', 'site_title_setting', 'my-theme-options', 'options_general');
-    add_settings_field('cc_setting', 'Using Creative Commons liscense? ', 'cc_setting', 'my-theme-options', 'options_general');
+    add_settings_field('featured_image_setting', 'Display featured image on issues page? ', 'featured_image_setting', 'my-theme-options', 'options_general');
+    add_settings_field('cc_setting', 'Using Creative Commons license? ', 'cc_setting', 'my-theme-options', 'options_general');
 }
 add_action( 'admin_init', 'my_admin_init' );
 
