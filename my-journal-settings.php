@@ -130,7 +130,7 @@ function my_admin_init() {
     add_settings_field('menu_logo', 'Menu Logo:', 'menu_logo_setting', 'my-theme-options', 'section_general');
     add_settings_field('back_image', 'Background Image:', 'back_image', 'my-theme-options', 'section_general');
     add_settings_field( 'back_color', 'Background Color', 'my_background_color', 'my-theme-options', 'section_general' );
-	add_settings_field( 'heading_color', 'Heading Color', 'my_heading_color', 'my-theme-options', 'section_general' );
+    add_settings_field( 'heading_color', 'Heading Color', 'my_heading_color', 'my-theme-options', 'section_general' );
 	add_settings_field( 'text_color', 'Text Color', 'my_text_color', 'my-theme-options', 'section_general' );
 	add_settings_field( 'link_color', 'Link Color', 'my_setting_color', 'my-theme-options', 'section_general' );
     add_settings_field( 'menu_back_color', 'Menu Background Color', 'my_menu_back_color', 'my-theme-options', 'section_general' );
@@ -163,7 +163,7 @@ function my_admin_init() {
     add_settings_field('site_desc', 'Description', 'site_desc', 'my-theme-options', 'options_general'); 
     add_settings_field('full_text_setting', 'This site displays: ', 'full_text_setting', 'my-theme-options', 'options_general');
     add_settings_field('site_title_setting', 'Display site title on home page? ', 'site_title_setting', 'my-theme-options', 'options_general');
-    add_settings_field('featured_image_setting', 'Display featured image on issues page? ', 'featured_image_setting', 'my-theme-options', 'options_general');
+    add_settings_field('cc_setting', 'Using Creative Commons liscense? ', 'cc_setting', 'my-theme-options', 'options_general');
 }
 add_action( 'admin_init', 'my_admin_init' );
 
@@ -354,6 +354,10 @@ function my_wp_head() {
            div#bs-example-navbar-collapse-1.collapse.navbar-collapse li:hover{
             background-color: <?php echo $menu_hover_color ?>;
            }
+         /*  #footer_container {
+            width: 100%;
+            background-color: <?php echo $menu_background_color ?>;
+           }*/
            div#bs-example-navbar-collapse-1 a{
             color: <?php echo $menu_text_color ?>;
            }
@@ -536,6 +540,24 @@ function featured_image_setting(){
     <input type="radio" name="general-options[featured_image_setting]" value="yes"<?php checked( 'yes' == $options['featured_image_setting'] ); ?> />
     No
     <input type="radio" name="general-options[featured_image_setting]" value="no"<?php checked( 'no' == $options['featured_image_setting'] ); ?> />
+    <?php
+}
+
+function cc_setting() {
+    $options = get_option( 'general-options' );
+
+    // Get the value of this option.
+    $checked = $options['cc_setting'];
+
+    // The value to compare with (the value of the checkbox below).
+    $current = 1;
+
+    // True by default, just here to make things clear.
+    $echo = true;
+
+    ?>
+    <input id="cc_setting"  type="checkbox" name="general-options[cc_setting]" type="text" value="1" <?php if ( 1 == $options['cc_setting'] ) echo 'checked="checked"'; ?> />
+
     <?php
 }
 
