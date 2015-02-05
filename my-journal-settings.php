@@ -546,20 +546,19 @@ function featured_image_setting(){
 
 function cc_setting() {
     $options = get_option( 'general-options' );
+    $cc_setting = ( $options['cc_setting'] != "" ) ? sanitize_text_field( $options['cc_setting'] ) : '';
+    echo '<select id="cc_setting"  name="general-options[cc_setting]" >';
+        $license = array('None', 'CC BY', 'CC BY-SA', 'CC BY-ND', 'CC BY-NC', 'CC BY-NC-SA', 'CC BY-NC-ND');
+        $current_license = $cc_setting;
 
-    // Get the value of this option.
-    $checked = $options['cc_setting'];
-
-    // The value to compare with (the value of the checkbox below).
-    $current = 1;
-
-    // True by default, just here to make things clear.
-    $echo = true;
-
-    ?>
-    <input id="cc_setting"  type="checkbox" name="general-options[cc_setting]" type="text" value="1" <?php if ( 1 == $options['cc_setting'] ) echo 'checked="checked"'; ?> />
-
-    <?php
+    foreach($license as $l) {
+        if($l == $current_license) {
+            echo '<option selected="selected" value="' . $l . '">'.$l.'</option>';
+        }else {
+            echo '<option value="' . $l . '">'.$l.'</option>';
+        }
+    }
+    echo '</select>';
 }
 
 remove_filter('site_desc','wpautop');
