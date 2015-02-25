@@ -132,13 +132,17 @@ function my_admin_init() {
     add_settings_field( 'back_color', 'Background Color', 'my_background_color', 'my-theme-options', 'section_general' );
     add_settings_field( 'heading_color', 'Heading Color', 'my_heading_color', 'my-theme-options', 'section_general' );
 	add_settings_field( 'text_color', 'Text Color', 'my_text_color', 'my-theme-options', 'section_general' );
-	add_settings_field( 'link_color', 'Link Color', 'my_setting_color', 'my-theme-options', 'section_general' );
+	add_settings_field( 'link_color', 'Link Color', 'link_color', 'my-theme-options', 'section_general' );
+    add_settings_field( 'link_color_hover', 'Link Color (Hover)', 'link_color_hover', 'my-theme-options', 'section_general' );
     add_settings_field( 'menu_back_color', 'Menu Background Color', 'my_menu_back_color', 'my-theme-options', 'section_general' );
     add_settings_field( 'menu_hover_color', 'Menu Background Color (Hover)', 'menu_hover_color', 'my-theme-options', 'section_general' );
     add_settings_field( 'menu_text_color', 'Menu Text Color', 'menu_text_color_set', 'my-theme-options', 'section_general' );
     add_settings_field( 'menu_hover_text_color', 'Menu Text Color (Hover)', 'menu_text_hover_color', 'my-theme-options', 'section_general' );
 	add_settings_field( 'active_menu_color', 'Menu Background Color (Active)', 'active_menu_color', 'my-theme-options', 'section_general' );
+    add_settings_field( 'home_menu_color_hover', 'Home Menu Color (hover)', 'home_menu_color_hover', 'my-theme-options', 'section_general' );
+    add_settings_field( 'home_menu_back_color_hover', 'Home Menu Background Color (hover)', 'home_menu_back_color_hover', 'my-theme-options', 'section_general' );
     add_settings_field( 'text_setting', 'Font', 'text_setting', 'my-theme-options', 'section_general' );
+
     
     register_setting( 'my-theme-options', 'my-footer-options');
     add_settings_section( 'footer_general', 'Footer Settings', 'my_footer_general', 'my-theme-options' );
@@ -212,10 +216,17 @@ function logo_setting() {
  }
 
 //for the link color
-function my_setting_color() {
+function link_color() {
     $options = get_option( 'my-theme-options' );
     $color = ( $options['link_color'] != "" ) ? sanitize_text_field( $options['link_color'] ) : '#3D9B0C';
     echo '<input id="link_color" class="color" name="my-theme-options[link_color]" type="text" value="' . $color .'" />';
+
+}
+
+function link_color_hover() {
+    $options = get_option( 'my-theme-options' );
+    $color = ( $options['link_color_hover'] != "" ) ? sanitize_text_field( $options['link_color_hover'] ) : '#3D9B0C';
+    echo '<input id="link_color_hover" class="color" name="my-theme-options[link_color_hover]" type="text" value="' . $color .'" />';
 
 }
 
@@ -281,6 +292,21 @@ function active_menu_color() {
 
 }
 
+function home_menu_color_hover() {
+    $options = get_option( 'my-theme-options' );
+    $color = ( $options['home_menu_color_hover'] != "" ) ? sanitize_text_field( $options['home_menu_color_hover'] ) : '#3D9B0C';
+    echo '<input id="home_menu_color_hover" class="color" name="my-theme-options[home_menu_color_hover]" type="text" value="' . $color .'" />';
+
+}
+
+function home_menu_back_color_hover() {
+    $options = get_option( 'my-theme-options' );
+    $color = ( $options['home_menu_back_color_hover'] != "" ) ? sanitize_text_field( $options['home_menu_back_color_hover'] ) : '#3D9B0C';
+    echo '<input id="home_menu_back_color_hover" class="color" name="my-theme-options[home_menu_back_color_hover]" type="text" value="' . $color .'" />';
+
+}
+
+
 function text_setting() {
     $options = get_option( 'my-theme-options' );
     $font_selection = ( $options['text_setting'] != "" ) ? sanitize_text_field( $options['text_setting'] ) : '';
@@ -334,6 +360,7 @@ function wp_enqueue_color_picker( ) {
 function my_wp_head() {
     $options = get_option( 'my-theme-options' );
     $color = $options['link_color'];
+    $link_hover = $options['link_color_hover'];
     $background_color = $options['background_color'];
     $text_color = $options['text_color'];
     $heading_color = $options['heading_color'];
@@ -344,15 +371,18 @@ function my_wp_head() {
     $back_image = get_option('background_image_url');
     $active_menu = $options['active_menu_color'];
     $font = $options['text_setting'];
+    $home_font_hover = $options['home_menu_color_hover'];
+    $home_back_hover = $options['home_menu_back_color_hover'];
     ?>
         <style> a { color: <?php echo $color ?>; }
+            a:hover {color: <? echo $link_hover ?>;}
     	   body {background-color: <?php echo $background_color ?>;
     	   		 color: <?php echo $text_color ?>;
                  background-image: url("<?php echo $back_image ?>");
                  font-family: <?php if($font != 'Default'){ echo $font; } ?>;
                   }
     	   h1, h2, h3, h4 { color: <?php echo $heading_color ?>; }
-           div#bs-example-navbar-collapse-1.collapse.navbar-collapse li:hover{
+           div#bs-example-navbar-collapse-1.collapse.navbar-collapse li:hover,  div#bs-example-navbar-collapse-1 a.dropdown-toggle:hover {
             background-color: <?php echo $menu_hover_color ?>;
            }
          /*  #footer_container {
@@ -368,8 +398,12 @@ function my_wp_head() {
            #cujo-navbar li.active a, div#bs-example-navbar-collapse-1 li.active a{
                 background-color: <?php echo $active_menu ?>; 
            }
-           div#bs-example-navbar-collapse-1 a:hover{
+           div#bs-example-navbar-collapse-1 a:hover {
             color: <?php echo $menu_text_hover_color ?>;
+           }
+           div#bs-example-navbar-collapse-1 a:checked{
+            color: <?php echo $menu_text_hover_color ?>;
+            background-color: <?php echo $menu_hover_color ?>;
            }
            div.container-fluid{ background-color: <?php echo $menu_background_color ?>;}
            nav.navbar.navbar-default.navbar-fixed-top div.container-fluid{ background-color: <?php echo $menu_background_color ?>;
@@ -377,6 +411,10 @@ function my_wp_head() {
            #cujo-navbar a {color: <?php echo $menu_text_color ?>;}
            #cujo-navbar a:hover { background-color: <?php echo $menu_hover_color ?>;
                 color: <?php echo $menu_text_hover_color ?>;}
+            #home-access-nav li a:hover{
+                color: <?php echo $home_font_hover ?>;
+                background-color: <?php echo $home_back_hover ?> !important;
+            }
 
     	 </style>
     <?php
