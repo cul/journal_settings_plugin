@@ -405,6 +405,16 @@ function my_wp_head() {
             color: <?php echo $menu_text_hover_color ?>;
             background-color: <?php echo $menu_hover_color ?>;
            }
+           .navbar-default .navbar-nav > .open > a .caret,.navbar-default .navbar-nav > .open > a, 
+           .navbar-default .navbar-nav > .open > a:hover, 
+           .navbar-default .navbar-nav > .open > a:focus{
+            color: <?php echo $menu_text_hover_color ?>;
+            background-color: <?php echo $menu_hover_color ?>;
+           }
+           div#bs-example-navbar-collapse-1 ul a:hover{
+            color: <?php echo $menu_text_hover_color ?>;
+            background-color: <?php echo $menu_hover_color ?>;
+           }
            div.container-fluid{ background-color: <?php echo $menu_background_color ?>;}
            nav.navbar.navbar-default.navbar-fixed-top div.container-fluid{ background-color: <?php echo $menu_background_color ?>;
             color: <?php echo $menu_text_color ?>;}
